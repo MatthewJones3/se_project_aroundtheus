@@ -45,7 +45,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-top: 20px;
+  padding-top: 40px;
   padding-bottom: 10px;
 }
 
@@ -98,6 +98,9 @@
   .profile__description {
     width: 100%;
     text-align: center;
+    font-size: 14px;
+    font-weight: 400px;
+    line-height: 16.94px;
     width: 282px;
     gap: 0px;
     padding-bottom: 50px;
@@ -116,7 +119,6 @@
 
   .profile__title {
     width: 196px;
-    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-size: 22px;
     font-weight: 500;
     line-height: 26.63px;
@@ -130,5 +132,10 @@
     border: 1px solid white;
     background: transparent url(../images/edit-icon.svg);
     background-position: center;
+    margin-top: 30px;
+  }
+
+  .profile__image {
+    margin: 0;
   }
 }
