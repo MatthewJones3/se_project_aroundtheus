@@ -103,7 +103,7 @@
     line-height: 16.94px;
     width: 282px;
     gap: 0px;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
   }
 
   .profile__add-button {
@@ -112,9 +112,6 @@
     align-items: center;
     width: 282px;
     gap: 0px;
-    border-radius: 2px;
-    color: white;
-    border-style: solid;
   }
 
   .profile__title {
@@ -128,8 +125,6 @@
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    border-color: white;
-    border: 1px solid white;
     background: transparent url(../images/edit-icon.svg);
     background-position: center;
     margin-top: 30px;
