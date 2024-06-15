@@ -27,5 +27,3 @@ github: https://github.com/MatthewJones3/se_project_aroundtheus
 github-pages: https://matthewjones3.github.io/se_project_aroundtheus/
 
 se_project_aroundtheus is our first project in dealing with responsive web pages at different resolutions. The project is meant to help us learn and create a responsive webpage that will act correctly at different screen resolutions. Through Figma, we find all of the specifications we need in order to code into VScode. Through the integrated terminal, the project is to be uploaded to github for review. Display grid is one of the main focuses of this project.
-
-I legitimately have no idea why thats showing that way on your screen.
