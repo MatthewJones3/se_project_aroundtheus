@@ -42,7 +42,7 @@
   margin-left: 36px;
 }
 
-.modal__opened {
+.modal_opened {
   display: flex;
   visibility: visible;
 }
