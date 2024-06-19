@@ -8,8 +8,8 @@
   right: 0;
   z-index: 999;
   display: flex;
-  padding: 0 19px;
   visibility: hidden;
+  padding: 0 19px;
 }
 
 .modal__heading {
@@ -19,6 +19,7 @@
   font-weight: 900;
   font-size: 24px;
   line-height: 29.05px;
+  margin-left: 36px;
 }
 
 .modal__form {
@@ -37,6 +38,8 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 16.94px;
+  max-width: 358px;
+  margin-left: 36px;
 }
 
 .modal__opened {
@@ -47,10 +50,10 @@
 .modal__container {
   background-color: white;
   margin: auto;
-  padding: 36px;
   border-radius: 10px;
   position: relative;
   height: 330px;
+  width: 430px;
 }
 
 .modal__close {
@@ -83,7 +86,8 @@
   border-radius: 2px;
   color: white;
   background-color: black;
-  margin-top: 96px;
+  margin-top: 65px;
+  margin-left: 36px;
 }
 
 .modal__button:hover {
@@ -100,13 +104,17 @@
   }
 
   .modal__button {
-    width: 238px;
+    max-width: 238px;
     height: 46px;
+    margin-left: 22px;
+    margin-bottom: 25px;
   }
 
   .modal__input {
     width: 238px;
     height: 27px;
+    margin-right: 22px;
+    margin-left: 22px;
   }
 
   .modal__close {
@@ -119,5 +127,8 @@
   .modal__heading {
     font-size: 18px;
     line-height: 21.78px;
+    max-width: 238px;
+    margin-left: 22px;
+    margin-top: 25px;
   }
 }
