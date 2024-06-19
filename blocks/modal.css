@@ -7,9 +7,9 @@
   bottom: 0;
   right: 0;
   z-index: 999;
-  /* display: flex; */
   display: flex;
   padding: 0 19px;
+  visibility: hidden;
 }
 
 .modal__heading {
@@ -33,10 +33,15 @@
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: rgba(0, 0, 0, 0.2);
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16.94px;
 }
 
 .modal__opened {
   display: flex;
+  visibility: visible;
 }
 
 .modal__container {
