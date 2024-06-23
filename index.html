@@ -64,6 +64,30 @@
       </div>
     </div>
 
+    <div class="modal" id="add-card-modal">
+      <div class="modal__container">
+        <h3 class="modal__heading">New Place</h3>
+        <form class="modal__form" id="add-card-form">
+          <button class="modal__close" type="button"></button>
+          <input
+            class="modal__input"
+            type="text"
+            name="Title"
+            id="profile-title-input"
+            placeholder="Title"
+          />
+          <input
+            class="modal__input"
+            type="text"
+            name="URL"
+            id="profile-URL-input"
+            placeholder="Image URL"
+          />
+          <button class="modal__button" type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
         <img src="" class="card__image" alt="" />
