@@ -42,9 +42,10 @@
   width: 18px;
   height: 19px;
   color: #fff;
-  top: 5px;
-  right: 5px;
+  top: -350px;
+  right: -250px;
   border: none;
+  position: relative;
 }
 
 .card__delete-button:hover {
