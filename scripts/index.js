@@ -48,7 +48,7 @@ const cardTitleInput = addCardFormElement.querySelector(
 );
 const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
 const deleteTemplate =
-  document.querySelector("#delete-template").content.firstElementChild;
+  document.querySelector("#card-template").content.lastElementChild;
 
 /* Functions */
 function closePopup() {
@@ -75,7 +75,14 @@ function getCardElement(cardData) {
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
+  const deleteButton = document.createElement("button");
+
+  deleteButton.classList.add("card__delete-button");
+  cardElement.appendChild(deleteButton);
+
+  deleteButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
 
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
@@ -86,7 +93,7 @@ function getCardElement(cardData) {
   cardTitleEl.textContent = cardData.name;
   return cardElement;
 }
-//remember to remove or save the function below
+
 function openModal(modal) {
   modal.classList.add("modal_opened");
 }
@@ -122,9 +129,9 @@ initialCards.forEach((cardData) => {
   cardListEl.prepend(cardElement);
 });
 
-deleteButton.addEventListener("click", () => {
-  deleteButton.classList.toggle("card__delete-button");
-});
+/*deleteButton.addEventListener("click", () => {
+  cardElement.remove();
+}); */
 
 //find delete button
 // add event listener to button

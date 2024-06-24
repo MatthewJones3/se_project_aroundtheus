@@ -38,8 +38,18 @@
 }
 
 .card__delete-button {
-  background-image: url(../images/Trash.svg);
-  color: #ffffff;
+  background: url(../images/Trash.svg);
+  width: 18px;
+  height: 19px;
+  color: #fff;
+  top: 5px;
+  right: 5px;
+  border: none;
+}
+
+.card__delete-button:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 .card__title {
