@@ -8,20 +8,36 @@
   right: 0;
   bottom: 0;
   left: 0;
+  position: fixed;
+  visibility: hidden;
+  z-index: 999;
 }
 
-.popup__content_type_preview {
+.popup_opened {
+  display: flex;
+  visibility: visible;
+}
+
+.popup__content {
   max-height: 75vh;
   max-width: 75vw;
   width: auto;
   height: auto;
   background: transparent;
+  position: absolute;
 }
 
 .popup__preview-image {
   max-width: 433px;
   max-height: 540px;
   object-fit: cover;
+}
+
+.popup__preview-title {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
 }
 
 .popup__close {
@@ -36,4 +52,11 @@
   position: absolute;
   top: -45px;
   right: -45px;
+}
+
+@media screen and (max-width: 700px) and (min-width: 320px) {
+  .popup__preview-image {
+    height: 299px;
+    width: 240px;
+  }
 }
