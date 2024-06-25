@@ -49,6 +49,8 @@ const cardTitleInput = addCardFormElement.querySelector(
 const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
 const deleteTemplate =
   document.querySelector("#card-template").content.lastElementChild;
+const previewImageModalWindow = document.querySelector("#preview-popup");
+const previewImageElement = document.querySelector(".popup__preview-image");
 
 /* Functions */
 function closePopup() {
@@ -76,7 +78,8 @@ function generateCard(cardData) {
   const imageEl = cardElement.querySelector(".card__image");
   imageEl.style.backgroundImage = url($(cardData.link));
   imageEl.addEventListener("click", function () {
-    togglPopupWindow();
+    previewImageElement.src = cardData.link;
+    toggle(previewImageModalWindow);
   });
   return cardElement;
 }
