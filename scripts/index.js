@@ -70,6 +70,17 @@ function handleAddCardFormSubmit(evt) {
   closeModal(addCardModal);
 }
 
+function generateCard(cardData) {
+  const cardElement = cardTemplate.cloneNode(true);
+  cardElement.querySelector(".card__title").textContent = cardData.name;
+  const imageEl = cardElement.querySelector(".card__image");
+  imageEl.style.backgroundImage = url($(cardData.link));
+  imageEl.addEventListener("click", function () {
+    togglPopupWindow();
+  });
+  return cardElement;
+}
+
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageEl = cardElement.querySelector(".card__image");
@@ -96,10 +107,30 @@ function getCardElement(cardData) {
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  modal.style.opacity = 0;
+  let opacity = 0;
+  const animationFrame = () => {
+    opacity += 0.1;
+    modal.style.opacity = opacity;
+    if (opacity < 1) {
+      requestAnimationFrame(animationFrame);
+    }
+  };
+  requestAnimationFrame(animationFrame);
 }
 
 function closeModal(modal) {
-  modal.classList.add("modal__close");
+  modal.classList.remove("modal_opened");
+  modal.style.opacity = 1;
+  let opacity = 1;
+  const animationFrame = () => {
+    opacity -= 0.1;
+    modal.style.opacity = opacity;
+    if (opacity > 0) {
+      requestAnimationFrame(animationFrame);
+    }
+  };
+  requestAnimationFrame(animationFrame);
 }
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {

@@ -1,0 +1,39 @@
+.popup {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.popup__content_type_preview {
+  max-height: 75vh;
+  max-width: 75vw;
+  width: auto;
+  height: auto;
+  background: transparent;
+}
+
+.popup__preview-image {
+  max-width: 433px;
+  max-height: 540px;
+  object-fit: cover;
+}
+
+.popup__close {
+  background-image: url("../images/close-icon.svg");
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: -45px;
+  right: -45px;
+}
