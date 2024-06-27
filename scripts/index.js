@@ -50,11 +50,11 @@ const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
 const deleteTemplate =
   document.querySelector("#card-template").content.lastElementChild;
 const previewImageModalWindow = document.querySelector("#preview-popup");
-const previewImageElement = document.querySelector(".popup__preview-image");
+const previewImageElement = document.querySelector(".modal__preview-image");
 const previewPopupCloseButton =
-  previewImageModalWindow.querySelector(".popup__close");
+  previewImageModalWindow.querySelector(".modal__close");
 const previewTitleModalWindow = previewImageModalWindow.querySelector(
-  ".popup__preview-title"
+  ".modal__preview-title"
 );
 
 /* Functions */
@@ -75,13 +75,6 @@ function handleAddCardFormSubmit(evt) {
   const urlValue = cardUrlInput.value;
   const cardElement = getCardElement(titleValue, urlValue);
   closeModal(addCardModal);
-}
-
-function generateCard(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-  cardElement.querySelector(".card__title").textContent = cardData.name;
-  const cardImageEl = cardElement.querySelector(".card__image");
-  cardImageEl.style.backgroundImage = url($(cardData.link));
   return cardElement;
 }
 
@@ -118,6 +111,15 @@ function getCardElement(cardData) {
   cardImageEl.alt = cardData.name;
   cardImageEl.src = cardData.link;
   cardTitleEl.textContent = cardData.name;
+  return cardElement;
+}
+
+function handleAddCardFormSubmit(evt) {
+  evt.preventDefault();
+  const titleValue = cardTitleInput.value;
+  const urlValue = cardUrlInput.value;
+  const cardElement = getCardElement(titleValue, urlValue);
+  closeModal(addCardModal);
   return cardElement;
 }
 

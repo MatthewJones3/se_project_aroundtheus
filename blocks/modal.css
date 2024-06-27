@@ -10,6 +10,8 @@
   display: flex;
   visibility: hidden;
   padding: 0 19px;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal__heading {
@@ -94,16 +96,31 @@
   opacity: 0.8;
 }
 
-.popup__content {
+.modal__content {
   max-height: 75vh;
   max-width: 75vw;
   width: auto;
   height: auto;
   background: transparent;
+  position: absolute;
 }
 
 .card__image_modal {
   cursor: pointer;
+}
+
+.modal__preview-image {
+  max-width: 433px;
+  max-height: 540px;
+  object-fit: cover;
+}
+
+.modal__preview-title {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
+  color: #fff;
 }
 
 /*move close button at 630px */
@@ -142,5 +159,15 @@
     max-width: 238px;
     margin-left: 22px;
     margin-top: 25px;
+  }
+
+  .modal__preview-image {
+    height: 299px;
+    width: 240px;
+  }
+
+  .modal__close {
+    height: 33px;
+    width: 33px;
   }
 }
