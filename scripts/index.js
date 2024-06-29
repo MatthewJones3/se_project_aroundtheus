@@ -59,30 +59,15 @@ const previewTitleModalWindow = previewImageModalWindow.querySelector(
 );
 
 /* Functions */
+
 function closePopup() {
-  profileEditModal.classList.remove("modal_opened");
+  closeModal(profileEditModal);
 }
 
 function renderCard(cardData) {
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
 }
-
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  profileTitle.textContent = nameInput.value;
-  profileDescription.textContent = jobInput.value;
-  closeModal(editProfileModal);
-}
-
-/*function handleAddCardFormSubmit(evt) {
-  evt.preventDefault();
-  const titleValue = cardTitleInput.value;
-  const urlValue = cardUrlInput.value;
-  const cardElement = getCardElement(titleValue, urlValue);
-  closeModal(addCardModal);
-  return cardElement;
-} */
 
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -94,10 +79,6 @@ function getCardElement(cardData) {
   deleteButton.classList.add("card__delete-button");
   cardElement.appendChild(deleteButton);
 
-  deleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
   });
@@ -106,35 +87,22 @@ function getCardElement(cardData) {
     previewImageElement.src = cardData.link;
     previewImageElement.alt = cardData.name;
     previewTitleModalWindow.textContent = cardData.name;
-
     openModal(previewImageModalWindow);
   });
 
-  previewPopupCloseButton.addEventListener("click", () => {
-    closeModal(previewImageModalWindow);
+  deleteButton.addEventListener("click", () => {
+    cardElement.remove();
   });
+
+  /*previewPopupCloseButton.addEventListener("click", () => {
+    closeModal(previewImageModalWindow);
+  });*/
 
   cardImageEl.alt = cardData.name;
   cardImageEl.src = cardData.link;
   cardTitleEl.textContent = cardData.name;
   return cardElement;
 }
-
-/*function handleAddCardFormSubmit(evt) {
-  evt.preventDefault();
-  const titleValue = cardTitleInput.value;
-  const urlValue = cardUrlInput.value;
-  const cardData = {
-    name: titleValue,
-    link: urlValue,
-  };
-  const cardElement = getCardElement(titleValue, urlValue, cardData);
-  cardListEl.prepend(cardElement);
-  cardTitleInput.value = " ";
-  cardUrlInput.value = " ";
-  closeModal(addCardModal);
-  /*return cardElement;
-} */
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
@@ -151,51 +119,14 @@ function handleAddCardFormSubmit(evt) {
   closeModal(addCardModal);
 }
 
-/*function openModal(modal) {
+function openModal(modal) {
   modal.classList.add("modal_opened");
-  modal.style.opacity = 0;
-  let opacity = 0;
-  const animationFrame = () => {
-    opacity += 0.1;
-    modal.style.opacity = opacity;
-    if (opacity < 1) {
-      requestAnimationFrame(animationFrame);
-    }
-  };
-  requestAnimationFrame(animationFrame);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
-  modal.style.opacity = 1;
-  let opacity = 1;
-  const animationFrame = () => {
-    opacity -= 0.1;
-    modal.style.opacity = opacity;
-    if (opacity > 0) {
-      requestAnimationFrame(animationFrame);
-    }
-  };
-  requestAnimationFrame(animationFrame);
-}*/
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-
-  modal.style.transition = "opacity 0.3s ease";
-
-  setTimeout(() => {
-    modal.style.opacity = 1;
-  }, 10);
 }
 
-function closeModal(modal) {
-  modal.style.transition = "opacity 0.3s ease";
-  modal.style.opacity = 0;
-
-  setTimeout(() => {
-    modal.classList.remove("modal_opened");
-  }, 300);
-}
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
@@ -205,14 +136,16 @@ profileEditButton.addEventListener("click", () => {
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
-/*profileEditCloseButton.addEventListener("click", closePopup);*/
+document.addEventListener("click", (event) => {
+  const target = event.target;
 
-profileEditCloseButton.addEventListener("click", () => {
-  closeModal(profileEditModal);
-});
+  if (target.classList.contains("modal__close")) {
+    const modal = target.closest(".modal");
 
-addCardModalCloseButton.addEventListener("click", () => {
-  closeModal(addCardModal);
+    if (modal) {
+      closeModal(modal);
+    }
+  }
 });
 
 profileEditForm.addEventListener("submit", (e) => {

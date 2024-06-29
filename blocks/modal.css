@@ -13,7 +13,7 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
 }
 
 .modal__heading {
@@ -50,6 +50,7 @@
   display: flex;
   visibility: visible;
   opacity: 1;
+  transition: opacity 0.3s ease, visibility 0s linear;
 }
 
 .modal__container {
@@ -140,6 +141,7 @@
     height: 46px;
     margin-left: 22px;
     margin-bottom: 25px;
+    font-size: 14px;
   }
 
   .modal__input {
