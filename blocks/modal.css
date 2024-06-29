@@ -167,7 +167,7 @@
   }
 
   .modal__close {
-    height: 33px;
+    height: 33px; /* fix class name */
     width: 33px;
   }
 }

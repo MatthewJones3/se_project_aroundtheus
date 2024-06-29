@@ -62,6 +62,11 @@ function closePopup() {
   profileEditModal.classList.remove("modal_opened");
 }
 
+function renderCard(cardData) {
+  const cardElement = getCardElement(cardData);
+  cardListEl.prepend(cardElement);
+}
+
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = nameInput.value;
@@ -69,14 +74,14 @@ function handleProfileFormSubmit(evt) {
   closeModal(editProfileModal);
 }
 
-function handleAddCardFormSubmit(evt) {
+/*function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
   const titleValue = cardTitleInput.value;
   const urlValue = cardUrlInput.value;
   const cardElement = getCardElement(titleValue, urlValue);
   closeModal(addCardModal);
   return cardElement;
-}
+} */
 
 function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -118,9 +123,16 @@ function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
   const titleValue = cardTitleInput.value;
   const urlValue = cardUrlInput.value;
-  const cardElement = getCardElement(titleValue, urlValue);
+  const cardData = {
+    name: titleValue,
+    link: urlValue,
+  };
+  const cardElement = getCardElement(titleValue, urlValue, cardData);
+  cardListEl.prepend(cardElement);
+  cardTitleInput.value = " ";
+  cardUrlInput.value = " ";
   closeModal(addCardModal);
-  return cardElement;
+  /*return cardElement;*/
 }
 
 function openModal(modal) {
