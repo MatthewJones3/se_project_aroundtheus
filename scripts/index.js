@@ -164,15 +164,3 @@ initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
 });
-
-/*deleteButton.addEventListener("click", () => {
-  cardElement.remove();
-}); */
-
-//find delete button
-// add event listener to button
-// call cardElement.remove
-//same way with the like button
-
-//add click listener to cardImage
-//open modal with "previewImageModal"
