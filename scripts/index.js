@@ -60,7 +60,7 @@ const previewTitleModalWindow = previewImageModalWindow.querySelector(
 
 /* Functions */
 
-function closePopup() {
+function closeProfilePopup() {
   closeModal(profileEditModal);
 }
 
@@ -136,7 +136,8 @@ profileEditButton.addEventListener("click", () => {
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
-document.addEventListener("click", (event) => {
+/* on this one, I had help from an experienced friend and im not sure if its what you are looking for, but it seems to work, document removed */
+addEventListener("click", (event) => {
   const target = event.target;
 
   if (target.classList.contains("modal__close")) {
@@ -150,6 +151,7 @@ document.addEventListener("click", (event) => {
 
 profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  profileEditCloseButton.addEventListener("click", closeProfilePopup);
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   closePopup();
