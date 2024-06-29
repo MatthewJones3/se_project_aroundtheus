@@ -74,7 +74,7 @@ function getCardElement(cardData) {
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = document.createElement("button");
+  const deleteButton = cardElement.querySelector(".card__delete-button");
 
   deleteButton.classList.add("card__delete-button");
   cardElement.appendChild(deleteButton);
@@ -154,7 +154,7 @@ profileEditForm.addEventListener("submit", (e) => {
   profileEditCloseButton.addEventListener("click", closeProfilePopup);
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closePopup();
+  closeProfilePopup();
 });
 
 addNewCardButton.addEventListener("click", () => openModal(addCardModal));
