@@ -53,6 +53,7 @@ const previewImageModalWindow = document.querySelector("#preview-popup");
 const previewImageElement = document.querySelector(".modal__preview-image");
 const previewPopupCloseButton =
   previewImageModalWindow.querySelector(".modal__close");
+
 const previewTitleModalWindow = previewImageModalWindow.querySelector(
   ".modal__preview-title"
 );
@@ -119,7 +120,7 @@ function getCardElement(cardData) {
   return cardElement;
 }
 
-function handleAddCardFormSubmit(evt) {
+/*function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
   const titleValue = cardTitleInput.value;
   const urlValue = cardUrlInput.value;
@@ -132,10 +133,25 @@ function handleAddCardFormSubmit(evt) {
   cardTitleInput.value = " ";
   cardUrlInput.value = " ";
   closeModal(addCardModal);
-  /*return cardElement;*/
+  /*return cardElement;
+} */
+
+function handleAddCardFormSubmit(evt) {
+  evt.preventDefault();
+  const titleValue = cardTitleInput.value;
+  const urlValue = cardUrlInput.value;
+  const cardData = {
+    name: titleValue,
+    link: urlValue,
+  };
+  const cardElement = getCardElement(cardData);
+  cardListEl.prepend(cardElement);
+  cardTitleInput.value = "";
+  cardUrlInput.value = "";
+  closeModal(addCardModal);
 }
 
-function openModal(modal) {
+/*function openModal(modal) {
   modal.classList.add("modal_opened");
   modal.style.opacity = 0;
   let opacity = 0;
@@ -161,6 +177,24 @@ function closeModal(modal) {
     }
   };
   requestAnimationFrame(animationFrame);
+}*/
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+
+  modal.style.transition = "opacity 0.3s ease";
+
+  setTimeout(() => {
+    modal.style.opacity = 1;
+  }, 10);
+}
+
+function closeModal(modal) {
+  modal.style.transition = "opacity 0.3s ease";
+  modal.style.opacity = 0;
+
+  setTimeout(() => {
+    modal.classList.remove("modal_opened");
+  }, 300);
 }
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {
@@ -171,7 +205,15 @@ profileEditButton.addEventListener("click", () => {
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
-profileEditCloseButton.addEventListener("click", closePopup);
+/*profileEditCloseButton.addEventListener("click", closePopup);*/
+
+profileEditCloseButton.addEventListener("click", () => {
+  closeModal(profileEditModal);
+});
+
+addCardModalCloseButton.addEventListener("click", () => {
+  closeModal(addCardModal);
+});
 
 profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
