@@ -94,10 +94,6 @@ function getCardElement(cardData) {
     cardElement.remove();
   });
 
-  /*previewPopupCloseButton.addEventListener("click", () => {
-    closeModal(previewImageModalWindow);
-  });*/
-
   cardImageEl.alt = cardData.name;
   cardImageEl.src = cardData.link;
   cardTitleEl.textContent = cardData.name;
@@ -131,36 +127,31 @@ function closeModal(modal) {
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  profileEditModal.classList.add("modal_opened");
+  openModal("modal_opened");
 });
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
-
-/* on this one, I had help from an experienced friend and im not sure if its what you are looking for, but it seems to work, document removed */
-addEventListener("click", (event) => {
+addCardFormElement.addEventListener("click", handleModalClose);
+function handleModalClose(event) {
   const target = event.target;
-
   if (target.classList.contains("modal__close")) {
     const modal = target.closest(".modal");
-
     if (modal) {
       closeModal(modal);
     }
   }
-});
+}
 
 profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  /*profileEditCloseButton.addEventListener("click", closeProfilePopup);*/
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  /*closeProfilePopup();*/
   closeModal(profileEditModal);
 });
 
 addNewCardButton.addEventListener("click", () => openModal(addCardModal));
 addCardModalCloseButton.addEventListener("click", () =>
-  addCardModal.classList.remove("modal_opened")
+  closeModal(addCardModal)
 );
 
 initialCards.forEach((cardData) => {
