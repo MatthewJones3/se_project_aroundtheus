@@ -142,8 +142,8 @@ profileEditForm.addEventListener("submit", (e) => {
 });
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
-addCardFormElement.addEventListener("click", handleModalClose);
-function handleModalClose(event) {
+/*addCardFormElement.addEventListener("click", handleModalClose);*/
+/*function handleModalClose(event) {
   const target = event.target;
   if (target.classList.contains("modal__close")) {
     const modal = target.closest(".modal");
@@ -151,7 +151,7 @@ function handleModalClose(event) {
       closeModal(handleAddCardFormSubmit);
     }
   }
-}
+}*/
 
 /*profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -165,9 +165,13 @@ addCardModalCloseButton.addEventListener("click", () =>
   closeModal(addCardModal)
 );
 
-previewImageModalWindow.addEventListener("click", () =>
+/*previewImageModalWindow.addEventListener("click", () =>
   closeModal(previewImageModalWindow)
-);
+);*/
+
+previewPopupCloseButton.addEventListener("click", () => {
+  closeModal(previewImageModalWindow);
+});
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
