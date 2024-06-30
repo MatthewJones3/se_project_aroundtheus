@@ -151,11 +151,11 @@ addEventListener("click", (event) => {
 
 profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  profileEditCloseButton.addEventListener("click", closeProfilePopup);
+  /*profileEditCloseButton.addEventListener("click", closeProfilePopup);*/
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
   /*closeProfilePopup();*/
-  closeModal(modal);
+  closeModal(profileEditModal);
 });
 
 addNewCardButton.addEventListener("click", () => openModal(addCardModal));
