@@ -130,6 +130,10 @@ profileEditButton.addEventListener("click", () => {
   openModal(profileEditModal);
 });
 
+profileEditCloseButton.addEventListener("click", () => {
+  closeModal(profileEditModal);
+});
+
 profileEditForm.addEventListener("submit", (e) => {
   e.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
@@ -164,8 +168,6 @@ addCardModalCloseButton.addEventListener("click", () =>
 previewImageModalWindow.addEventListener("click", () =>
   closeModal(previewImageModalWindow)
 );
-
-profileEditModal.addEventListener("click", () => closeModal(profileEditModal));
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
