@@ -47,18 +47,31 @@
         <h3 class="modal__heading">Edit Profile</h3>
         <form class="modal__form">
           <button class="modal__close" type="button"></button>
+
           <input
             class="modal__input modal__input_type_name"
             type="text"
             name="title"
             id="profile-title-input"
+            minlength="2"
+            maxlength="40"
+            required
           />
+          <span class="modal__error" id="profile-title-input-error"></span>
+
           <input
             class="modal__input modal__input_type_description"
             type="text"
             name="description"
             id="profile-description-input"
+            minlength="2"
+            maxlength="200"
+            required
           />
+          <span
+            class="modal__error"
+            id="profile-description-input-error"
+          ></span>
           <button class="modal__button" type="submit">Save</button>
         </form>
       </div>
@@ -75,7 +88,11 @@
             name="Title"
             id="profile-title-input"
             placeholder="Title"
+            minlength="1"
+            maxlength="30"
+            required
           />
+          <span class="modal__error" id="profile-title-input-error"></span>
           <input
             class="modal__input modal__input_type_url"
             type="text"
@@ -115,5 +132,6 @@
     </template>
 
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
   </body>
 </html>
