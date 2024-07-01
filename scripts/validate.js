@@ -6,7 +6,7 @@ function showInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   inputEl.classList.add(inputErrorClass);
   errorMessageEl.textContent = inputEl.validationMessage;
   errorMessageEl.classList.add(errorClass);
-  inputEl.classList.add(".modal__input_type_error");
+  inputEl.classList.add("modal__input_type_error");
 }
 
 function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
@@ -14,7 +14,7 @@ function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   inputEl.classList.add(inputErrorClass);
   errorMessageEl.textContent = "";
   errorMessageEl.classList.remove(errorClass);
-  inputEl.classList.remove(".modal__input_type_error");
+  inputEl.classList.remove("modal__input_type_error");
 }
 
 function checkInputValidity(formEl, inputEl, options) {
@@ -76,6 +76,7 @@ function showURLInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   inputEl.classList.add(inputErrorClass);
   errorMessageEl.textContent = "Please enter a web address";
   errorMessageEl.classList.add(errorClass);
+  inputEl.classList.add("modal__input_type_error");
 }
 
 function checkURLValidity(formEl, inputEl, options) {
