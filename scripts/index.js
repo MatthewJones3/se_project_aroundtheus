@@ -76,8 +76,8 @@ function getCardElement(cardData) {
   const likeButton = cardElement.querySelector(".card__like-button");
   const deleteButton = cardElement.querySelector(".card__delete-button");
 
-  deleteButton.classList.add("card__delete-button");
-  cardElement.appendChild(deleteButton);
+  /*deleteButton.classList.add("card__delete-button");*/
+  /*cardElement.appendChild(deleteButton);*/
 
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
@@ -161,19 +161,25 @@ initialCards.forEach((cardData) => {
   cardListEl.prepend(cardElement);
 });
 
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-  addEventListener("keydown", closeModalOnEsc);
+/* i hope this is a a fine way of doing so, I think I corrected all "needs correcting" issues. I think */
+function closeModalOnEvent(event) {
+  const modals = [
+    document.querySelector("#profile-edit-modal"),
+    document.querySelector("#add-card-modal"),
+    document.querySelector("#preview-popup"),
+  ];
 
-  function closeModalOnEsc(event) {
-    if (event.key === "Escape") {
-      closeModal(modal);
+  if (event.type === "keydown" && event.key === "Escape") {
+    modals.forEach((modal) => closeModal(modal));
+  }
+
+  if (event.type === "click") {
+    const clickedOutsideModal = modals.find((modal) => event.target === modal);
+    if (clickedOutsideModal) {
+      closeModal(clickedOutsideModal);
     }
   }
-  function closeModalOnClickOutside(event) {
-    if (event.target === modal) {
-      closeModal(modal);
-    }
-  }
-  addEventListener("click", closeModalOnClickOutside);
 }
+
+window.addEventListener("keydown", closeModalOnEvent);
+document.addEventListener("click", closeModalOnEvent);
