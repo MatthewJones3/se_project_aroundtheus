@@ -181,5 +181,19 @@ function closeModalOnEvent(event) {
   }
 }
 
-window.addEventListener("keydown", closeModalOnEvent);
-document.addEventListener("click", closeModalOnEvent);
+/*window.addEventListener("keydown", closeModalOnEvent);
+document.addEventListener("click", closeModalOnEvent);*/
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+  // Add event listeners when the modal is opened
+  window.addEventListener("keydown", closeModalOnEvent);
+  document.addEventListener("click", closeModalOnEvent);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+  // Remove event listeners when the modal is closed
+  window.removeEventListener("keydown", closeModalOnEvent);
+  document.removeEventListener("click", closeModalOnEvent);
+}
