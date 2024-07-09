@@ -1,12 +1,9 @@
-// enabling validation by calling enableValidation()
-// pass all the settings on call
-
 function showInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   const errorMessageEl = formEl.querySelector(`#${inputEl.id}-error`);
   inputEl.classList.add(inputErrorClass);
   errorMessageEl.textContent = inputEl.validationMessage;
   errorMessageEl.classList.add(errorClass);
-  inputEl.classList.add("modal__input_type_error");
+  /*inputEl.classList.add(inputErrorClass);*/
 }
 
 function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
@@ -14,10 +11,8 @@ function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   inputEl.classList.add(inputErrorClass);
   errorMessageEl.textContent = "";
   errorMessageEl.classList.remove(errorClass);
-  inputEl.classList.remove("modal__input_type_error");
-  // I've corrected some leading dots and have validation functions running
-  //I fixed everything else and made sure this matched config
-  //I hope this is what you meant. I believe I understood at this point.
+  inputEl.classList.remove(inputErrorClass);
+  //Okay, I have changed whats been pointed out and tested all others I thought may be involved
 }
 
 function checkInputValidity(formEl, inputEl, options) {
@@ -45,7 +40,7 @@ function toggleButtonState(inputEls, submitButton, { inactiveButtonClass }) {
   submitButton.disabled = false;
 }
 
-function setEventListeners(formEl, options) {
+/*function setEventListeners(formEl, options) {
   const { inputSelector } = options;
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
   const submitButton = formEl.querySelector(".modal__button");
@@ -55,7 +50,7 @@ function setEventListeners(formEl, options) {
       toggleButtonState(inputEls, submitButton, options);
     });
   });
-}
+}*/
 
 function enableValidation(options) {
   const formEls = [...document.querySelectorAll(options.formSelector)];
@@ -79,7 +74,7 @@ function showURLInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   inputEl.classList.add(inputErrorClass);
   errorMessageEl.textContent = "Please enter a web address";
   errorMessageEl.classList.add(errorClass);
-  inputEl.classList.add("modal__input_type_error");
+  inputEl.classList.add(inputErrorClass);
 }
 
 function checkURLValidity(formEl, inputEl, options) {

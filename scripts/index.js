@@ -115,14 +115,6 @@ function handleAddCardFormSubmit(evt) {
   closeModal(addCardModal);
 }
 
-/*function openModal(modal) {
-  modal.classList.add("modal_opened");
-} this was extra code. commenting out for future reference. Dont repeat */
-
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-}
-
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
