@@ -115,9 +115,9 @@ function handleAddCardFormSubmit(evt) {
   closeModal(addCardModal);
 }
 
-function openModal(modal) {
+/*function openModal(modal) {
   modal.classList.add("modal_opened");
-}
+} this was extra code. commenting out for future reference. Dont repeat */
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
@@ -163,11 +163,7 @@ initialCards.forEach((cardData) => {
 
 /* i hope this is a a fine way of doing so, I think I corrected all "needs correcting" issues. I think */
 function closeModalOnEvent(event) {
-  const modals = [
-    document.querySelector("#profile-edit-modal"),
-    document.querySelector("#add-card-modal"),
-    document.querySelector("#preview-popup"),
-  ];
+  const modals = [profileEditModal, addCardModal, previewImageModalWindow];
 
   if (event.type === "keydown" && event.key === "Escape") {
     modals.forEach((modal) => closeModal(modal));
@@ -181,19 +177,14 @@ function closeModalOnEvent(event) {
   }
 }
 
-/*window.addEventListener("keydown", closeModalOnEvent);
-document.addEventListener("click", closeModalOnEvent);*/
-
 function openModal(modal) {
   modal.classList.add("modal_opened");
-  // Add event listeners when the modal is opened
   window.addEventListener("keydown", closeModalOnEvent);
   document.addEventListener("click", closeModalOnEvent);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
-  // Remove event listeners when the modal is closed
   window.removeEventListener("keydown", closeModalOnEvent);
   document.removeEventListener("click", closeModalOnEvent);
 }

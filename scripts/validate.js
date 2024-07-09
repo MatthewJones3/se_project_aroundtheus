@@ -15,6 +15,9 @@ function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   errorMessageEl.textContent = "";
   errorMessageEl.classList.remove(errorClass);
   inputEl.classList.remove("modal__input_type_error");
+  // I've corrected some leading dots and have validation functions running
+  //I fixed everything else and made sure this matched config
+  //I hope this is what you meant. I believe I understood at this point.
 }
 
 function checkInputValidity(formEl, inputEl, options) {
@@ -107,9 +110,9 @@ const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__button",
-  inactiveButtonClass: ".modal__button_disabled",
-  inputErrorClass: ".modal__input_type_error",
-  errorClass: ".modal__error_visible",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
 };
 
 enableValidation(config);
