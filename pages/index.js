@@ -1,4 +1,5 @@
-import Card from "./card.js";
+import Card from "../components/card.js";
+import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
   {
@@ -32,8 +33,20 @@ const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-const card = new Card(cardData);
+const card = new Card(cardData, "#card-template");
 card.getView();
+
+const settings = {
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit-button",
+  inactiveButtonClass: "form__submit-button_inactive",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active",
+};
+
+const formElement = document.querySelector(".modal__form");
+
+const formValidator = new FormValidator(settings, formElement);
 
 /* Elements (For my own purposes)*/
 const profileEditButton = document.querySelector("#profile-edit-button");
@@ -150,10 +163,6 @@ addCardModalCloseButton.addEventListener("click", () =>
   closeModal(addCardModal)
 );
 
-/*previewImageModalWindow.addEventListener("click", () =>
-  closeModal(previewImageModalWindow)
-);*/
-
 previewPopupCloseButton.addEventListener("click", () => {
   closeModal(previewImageModalWindow);
 });
@@ -163,7 +172,6 @@ initialCards.forEach((cardData) => {
   cardListEl.prepend(cardElement);
 });
 
-/* i hope this is a a fine way of doing so, I think I corrected all "needs correcting" issues. I think */
 function closeModalOnEvent(event) {
   const modals = [profileEditModal, addCardModal, previewImageModalWindow];
 
