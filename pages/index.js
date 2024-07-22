@@ -37,16 +37,18 @@ const card = new Card(cardData, "#card-template");
 card.getView();
 
 const settings = {
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_inactive",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__submit-button_inactive",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__input-error_active",
 };
 
-const formElement = document.querySelector(".modal__form");
+/*const editFormValidator = new FormValidator(settings, profileEditForm);
+editFormValidator.enableValidation();*/
 
-const formValidator = new FormValidator(settings, formElement);
+/*const addCardFormValidator = new FormValidator(settings, addCardFormElement);
+addCardFormValidator.enableValidation();*/
 
 /* Elements (For my own purposes)*/
 const profileEditButton = document.querySelector("#profile-edit-button");
@@ -80,8 +82,20 @@ const previewPopupCloseButton =
 const previewTitleModalWindow = previewImageModalWindow.querySelector(
   ".modal__preview-title"
 );
+const editFormValidator = new FormValidator(settings, profileEditForm);
+editFormValidator.enableValidation();
+
+const addCardFormValidator = new FormValidator(settings, addCardFormElement);
+addCardFormValidator.enableValidation();
 
 /* Functions */
+
+function handleImageClick(link) {
+  previewImageElement.src = link;
+  previewImageElement.alt = "Preview Image";
+  previewTitleModalWindow.textContent = "Preview";
+  openModal(previewImageModalWindow);
+}
 
 function closeProfilePopup() {
   closeModal(profileEditModal);

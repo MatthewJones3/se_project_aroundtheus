@@ -1,0 +1,15 @@
+{
+  "name": "cd",
+  "version": "1.0.0",
+  "description": "TripleTen Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matthew Jones",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "5.76.0",
+    "webpack-cli": "4.10.0"
+  }
+}

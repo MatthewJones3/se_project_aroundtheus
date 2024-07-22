@@ -11,7 +11,6 @@ function hideInputError(formEl, inputEl, { inputErrorClass, errorClass }) {
   errorMessageEl.textContent = "";
   errorMessageEl.classList.remove(errorClass);
   inputEl.classList.remove(inputErrorClass);
-  //Okay, I have changed whats been pointed out and tested all others I thought may be involved
 }
 
 function checkInputValidity(formEl, inputEl, options) {
