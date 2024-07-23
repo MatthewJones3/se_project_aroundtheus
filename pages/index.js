@@ -33,8 +33,8 @@ const cardData = {
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
 };
 
-const card = new Card(cardData, "#card-template");
-card.getView();
+/*const card = new Card(cardData, "#card-template", handleImageClick);
+card.getView();*/
 
 const settings = {
   inputSelector: ".modal__input",
@@ -145,6 +145,8 @@ function handleAddCardFormSubmit(evt) {
     name: titleValue,
     link: urlValue,
   };
+  const card = new Card(cardData, "#card-template", handleImageClick);
+  card.getView();
   const cardElement = getCardElement(cardData);
   cardListEl.prepend(cardElement);
   cardTitleInput.value = "";
