@@ -3,9 +3,25 @@ export default class Card {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
-    // this._cardElement = null;
     this._handleImageClick = handleImageClick;
-    //this._setEventListeners();
+    this._cardElement = this._getCardElement(cardData);
+    this._setEventListeners();
+  }
+
+  _getCardElement(cardData) {
+    const cardTemplate = document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".card");
+    const cardElement = cardTemplate.cloneNode(true);
+
+    const cardImageEl = cardElement.querySelector(".card__image");
+    const cardTitleEl = cardElement.querySelector(".card__title");
+
+    cardImageEl.src = this._link;
+    cardImageEl.alt = this._name;
+    cardTitleEl.textContent = this._name;
+
+    return cardElement;
   }
 
   _setEventListeners() {
