@@ -1,4 +1,4 @@
-export default class Card {
+/*export default class Card {
   constructor({ name, link }, cardSelector, handleImageClick) {
     this._name = name;
     this._link = link;
@@ -41,10 +41,7 @@ export default class Card {
         this._handleImageClick(this._link);
       });
 
-    /*const imagePreview = this._cardElement.querySelector(".card__image");
-    if (imagePreview) {
-      imagePreview.addEventListener("click", this._handleImageClick); // Attach handleImageClick here
-    }*/
+    
   }
 
   _handleDeleteCard() {
@@ -71,5 +68,70 @@ export default class Card {
       .cloneNode(true);
     this._setEventListeners();
     return this._cardElement;
+  }
+}*/
+// Changes suggested by DOT. Leaving old code commented out for now just in case.
+export default class Card {
+  constructor(data, cardSelector, handleImageClick) {
+    this._name = data.name;
+    this._link = data.link;
+    this._cardSelector = cardSelector;
+    this._handleImageClick = handleImageClick;
+  }
+
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".card")
+      .cloneNode(true);
+
+    return cardElement;
+  }
+
+  _setEventListeners() {
+    this._element
+      .querySelector(".card__like-button")
+      .addEventListener("click", () => {
+        this._handleLikeButton();
+      });
+
+    this._element
+      .querySelector(".card__delete-button")
+      .addEventListener("click", () => {
+        this._handleDeleteButton();
+      });
+
+    this._element
+      .querySelector(".card__image")
+      .addEventListener("click", () => {
+        this._handleImageClick(this._name, this._link);
+      });
+  }
+
+  _handleLikeButton() {
+    this._element
+      .querySelector(".card__like-button")
+      .classList.toggle("card__like-button_active");
+  }
+
+  _handleDeleteButton() {
+    this._element.remove();
+  }
+
+  generateCard() {
+    this._element = this._getTemplate();
+    this._setCardData();
+    this._setEventListeners();
+
+    return this._element;
+  }
+
+  _setCardData() {
+    const cardImageEl = this._element.querySelector(".card__image");
+    const cardTitleEl = this._element.querySelector(".card__title");
+
+    cardImageEl.src = this._link;
+    cardImageEl.alt = this._name;
+    cardTitleEl.textContent = this._name;
   }
 }
