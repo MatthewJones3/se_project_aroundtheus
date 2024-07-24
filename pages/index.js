@@ -72,7 +72,6 @@ addCardFormValidator.enableValidation();
 
 /* Function to handle image click */
 function handleImageClick(name, link) {
-  console.log(`Image clicked: ${name}, ${link}`);
   previewImageElement.src = link;
   previewImageElement.alt = name;
   previewTitleModalWindow.textContent = name;
@@ -114,10 +113,28 @@ initialCards.forEach((cardData) => {
   cardListEl.prepend(card.generateCard());
 });
 
+/*function createCard(item) {
+  initialCards.forEach((cardData) => {
+    const card = createCard(cardData);
+    cardListEl.prepend(card);
+    return addCardFormElement.generateCard();
+  });
+}*/
+
+function createCard(cardData) {
+  const card = new Card(cardData, "#card-template", handleImageClick);
+  cardListEl.prepend(card.generateCard());
+}
+
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-  const titleValue = cardTitleInput.value;
-  const urlValue = cardUrlInput.value;
+
+  // Retrieve input values
+  const titleValue = cardTitleInput.value.trim();
+  const urlValue = cardUrlInput.value.trim();
+  if (!titleValue || !urlValue) {
+    return;
+  }
   const cardData = {
     name: titleValue,
     link: urlValue,
@@ -126,7 +143,10 @@ function handleAddCardFormSubmit(evt) {
   cardListEl.prepend(card.generateCard());
   cardTitleInput.value = "";
   cardUrlInput.value = "";
-  closeModal(addCardModal);
+  const submitButton = addCardFormElement.querySelector(".modal__button");
+  submitButton.setAttribute("disabled", true);
+  submitButton.classList.add("modal__submit-button_inactive");
+  submitButton.removeEventListener("click", handleAddCardFormSubmit); // Remove click listener
 }
 
 function closeModalOnEvent(event) {
