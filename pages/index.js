@@ -1,4 +1,4 @@
-import Card from "../components/card.js";
+import Card from "../components/card.js"; //The file itself is Card.js but gives me an error when I try to change to uppercase here.
 import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
@@ -113,18 +113,18 @@ initialCards.forEach((cardData) => {
   cardListEl.prepend(card.generateCard());
 });
 
-/*function createCard(item) {
+function createCard(item) {
   initialCards.forEach((cardData) => {
     const card = createCard(cardData);
     cardListEl.prepend(card);
-    return addCardFormElement.generateCard();
+    return cardElement.generateCard();
   });
-}*/
+}
 
-function createCard(cardData) {
+/*function createCard(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   cardListEl.prepend(card.generateCard());
-}
+}*/
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
@@ -144,9 +144,9 @@ function handleAddCardFormSubmit(evt) {
   cardTitleInput.value = "";
   cardUrlInput.value = "";
   const submitButton = addCardFormElement.querySelector(".modal__button");
-  submitButton.setAttribute("disabled", true);
+  //submitButton.setAttribute("disabled", true); commented out not deleted just in case
   submitButton.classList.add("modal__submit-button_inactive");
-  submitButton.removeEventListener("click", handleAddCardFormSubmit); // Remove click listener
+  closeModal(addCardModal);
 }
 
 function closeModalOnEvent(event) {
