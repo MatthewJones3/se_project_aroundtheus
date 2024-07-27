@@ -1,4 +1,4 @@
-import Card from "../components/card.js"; //The file itself is Card.js but gives me an error when I try to change to uppercase here.
+import Card from "../components/Card.js"; //The file itself is Card.js but gives me an error when I try to change to uppercase here.
 import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
