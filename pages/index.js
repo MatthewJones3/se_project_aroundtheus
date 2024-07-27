@@ -1,4 +1,4 @@
-import Card from "../components/Card.js"; //The file itself is Card.js but gives me an error when I try to change to uppercase here.
+import Card from "../components/Card.js"; //The add card form is grey and disabled, so I'm not sure what you mean on the last correction
 import FormValidator from "../components/FormValidator.js";
 
 const initialCards = [
@@ -107,19 +107,16 @@ previewPopupCloseButton.addEventListener("click", () => {
   closeModal(previewImageModalWindow);
 });
 
+addNewCardButton.addEventListener("click", () => {
+  resetForm(addCardFormElement);
+  openModal(addCardModal);
+});
+
 /* Initial Rendering of Cards */
 initialCards.forEach((cardData) => {
   const card = new Card(cardData, "#card-template", handleImageClick);
   cardListEl.prepend(card.generateCard());
 });
-
-/*function createCard(item) {
-  initialCards.forEach((cardData) => {
-    const card = createCard(cardData);
-    cardListEl.prepend(card);
-    return cardElement.generateCard();
-  });
-}*/
 
 function createCard(item) {
   const card = new Card(item, "#card-template", handleImageClick);
@@ -138,8 +135,6 @@ initialCards.forEach((cardData) => {
 
 function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
-
-  // Retrieve input values
   const titleValue = cardTitleInput.value.trim();
   const urlValue = cardUrlInput.value.trim();
   if (!titleValue || !urlValue) {
@@ -185,3 +180,9 @@ function closeModal(modal) {
   window.removeEventListener("keydown", closeModalOnEvent);
   document.removeEventListener("click", closeModalOnEvent);
 }
+
+/*function resetForm(form) {
+  form.reset();
+  const formValidator = new FormValidator(validationConfig, form);
+  formValidator.resetValidation();
+}*/
