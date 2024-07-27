@@ -125,14 +125,14 @@ initialCards.forEach((cardData) => {
   cardListEl.prepend(card);
 });
 
-function createCard(item) {
+/*function createCard(item) {
   const card = new Card(item, "#card-template", handleImageClick);
   return card.generateCard();
-}
+}*/
 
 //initialCards.forEach((cardData) => ------ I deleted this duplicate rather than the other, as my cards disappeared when I did the other. Still, duplicate gone.
-const card = createCard(cardData);
-cardListEl.prepend(card);
+//const card = createCard(cardData);
+//cardListEl.prepend(card);
 /*function createCard(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   cardListEl.prepend(card.generateCard());
