@@ -108,7 +108,6 @@ previewPopupCloseButton.addEventListener("click", () => {
 });
 
 addNewCardButton.addEventListener("click", () => {
-  resetForm(addCardFormElement);
   openModal(addCardModal);
 });
 
@@ -149,6 +148,8 @@ function handleAddCardFormSubmit(evt) {
   cardTitleInput.value = "";
   cardUrlInput.value = "";
   const submitButton = addCardFormElement.querySelector(".modal__button");
+  addCardFormElement.reset();
+  addCardFormValidator.resetValidation();
   //submitButton.setAttribute("disabled", true); commented out not deleted just in case
   //submitButton.classList.add("modal__submit-button_inactive");
   closeModal(addCardModal);
