@@ -69,11 +69,6 @@ export default class FormValidator {
     });
   }
 
-  /*enableValidation() {
-    this._setEventListeners();
-    this._toggleButtonState();
-  }*/
-
   enableValidation() {
     this._formElement.addEventListener("input", () =>
       this._toggleButtonState()
@@ -90,9 +85,9 @@ export default class FormValidator {
     });
     this._toggleButtonState();
   }
-}
 
-/*_disableSubmitButton() {
+  _disableSubmitButton() {
     this._submitButton.classList.add(this._settings.inactiveButtonClass);
-    this._submitButton.setAttribute('disabled', true);
-  }*/
+    this._submitButton.setAttribute("disabled", true);
+  }
+}
