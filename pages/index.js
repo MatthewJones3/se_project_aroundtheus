@@ -78,6 +78,11 @@ function handleImageClick(name, link) {
   openModal(previewImageModalWindow);
 }
 
+function createCard(item) {
+  const card = new Card(item, "#card-template", handleImageClick);
+  return card.generateCard();
+}
+
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
@@ -112,21 +117,22 @@ addNewCardButton.addEventListener("click", () => {
 });
 
 /* Initial Rendering of Cards */
-initialCards.forEach((cardData) => {
+/*initialCards.forEach((cardData) => {
   const card = new Card(cardData, "#card-template", handleImageClick);
-  cardListEl.prepend(card.generateCard());
-});
-
-function createCard(item) {
-  const card = new Card(item, "#card-template", handleImageClick);
-  return cardElement.generateCard();
-}
-
+  cardListEl.prepend(card.generateCard());*/
 initialCards.forEach((cardData) => {
   const card = createCard(cardData);
   cardListEl.prepend(card);
 });
 
+function createCard(item) {
+  const card = new Card(item, "#card-template", handleImageClick);
+  return card.generateCard();
+}
+
+//initialCards.forEach((cardData) => ------ I deleted this duplicate rather than the other, as my cards disappeared when I did the other. Still, duplicate gone.
+const card = createCard(cardData);
+cardListEl.prepend(card);
 /*function createCard(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   cardListEl.prepend(card.generateCard());
@@ -143,11 +149,12 @@ function handleAddCardFormSubmit(evt) {
     name: titleValue,
     link: urlValue,
   };
-  const card = new Card(cardData, "#card-template", handleImageClick);
-  cardListEl.prepend(card.generateCard());
+  //const card = new Card(cardData, "#card-template", handleImageClick);
+  const card = createCard(cardData);
+  cardListEl.prepend(card);
   cardTitleInput.value = "";
   cardUrlInput.value = "";
-  const submitButton = addCardFormElement.querySelector(".modal__button");
+  //const submitButton = addCardFormElement.querySelector(".modal__button");
   addCardFormElement.reset();
   addCardFormValidator.resetValidation();
   //submitButton.setAttribute("disabled", true); commented out not deleted just in case
