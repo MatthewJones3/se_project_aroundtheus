@@ -113,13 +113,23 @@ initialCards.forEach((cardData) => {
   cardListEl.prepend(card.generateCard());
 });
 
-function createCard(item) {
+/*function createCard(item) {
   initialCards.forEach((cardData) => {
     const card = createCard(cardData);
     cardListEl.prepend(card);
     return cardElement.generateCard();
   });
+}*/
+
+function createCard(item) {
+  const card = new Card(item, "#card-template", handleImageClick);
+  return cardElement.generateCard();
 }
+
+initialCards.forEach((cardData) => {
+  const card = createCard(cardData);
+  cardListEl.prepend(card);
+});
 
 /*function createCard(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
@@ -145,7 +155,7 @@ function handleAddCardFormSubmit(evt) {
   cardUrlInput.value = "";
   const submitButton = addCardFormElement.querySelector(".modal__button");
   //submitButton.setAttribute("disabled", true); commented out not deleted just in case
-  submitButton.classList.add("modal__submit-button_inactive");
+  //submitButton.classList.add("modal__submit-button_inactive");
   closeModal(addCardModal);
 }
 
