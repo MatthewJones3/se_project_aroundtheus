@@ -1,5 +1,5 @@
-import Card from "../components/Card.js"; //The add card form is grey and disabled, so I'm not sure what you mean on the last correction
-import FormValidator from "../components/FormValidator.js";
+import Card from "../../components/Card.js"; //The add card form is grey and disabled, so I'm not sure what you mean on the last correction
+import FormValidator from "../../components/FormValidator.js";
 
 const initialCards = [
   {
