@@ -41,7 +41,7 @@ const settings = {
   errorClass: "modal__input-error_active",
 };
 
-const UserInfo = new UserInfo({
+const UserInfoInstance = new UserInfo({
   nameSelector: ".profile__name",
   jobSelector: ".profile__job",
 });
