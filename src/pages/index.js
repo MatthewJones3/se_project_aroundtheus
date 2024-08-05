@@ -1,6 +1,10 @@
 import Card from "../components/Card.js"; //The add card form is grey and disabled, so I'm not sure what you mean on the last correction
 import FormValidator from "../components/FormValidator.js";
 import "../pages/index.css";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 const initialCards = [
   {
@@ -36,6 +40,32 @@ const settings = {
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__input-error_active",
 };
+
+const UserInfo = new UserInfo({
+  nameSelector: ".profile__name",
+  jobSelector: ".profile__job",
+});
+
+const popupWithImage = new PopupWithImage(".popup_type_image");
+popupWithImage.setEventListeners();
+
+const popupWithForm = new PopupWithForm(".popup_type_profile", (data) => {
+  UserInfo.setUserInfo(data);
+  popupWithForm.close();
+});
+popupWithForm.setEventListeners();
+
+const section = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const card = createCard(item);
+      section.addItem(card);
+    },
+  },
+  ".cards"
+);
+section.renderItems(); // I have no idea if this "section.renderItems" is correct
 
 /* Elements (For my own purposes)*/
 const profileEditButton = document.querySelector("#profile-edit-button");
