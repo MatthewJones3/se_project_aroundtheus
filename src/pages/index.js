@@ -1,4 +1,4 @@
-import Card from "../components/Card.js"; //The add card form is grey and disabled, so I'm not sure what you mean on the last correction
+import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import "../pages/index.css";
 import Section from "../components/Section.js";
@@ -46,7 +46,7 @@ const UserInfoInstance = new UserInfo({
   jobSelector: ".profile__job",
 });
 
-const popupWithImage = new PopupWithImage(".popup_type_image");
+const popupWithImage = new PopupWithImage("#preview-popup");
 popupWithImage.setEventListeners();
 
 const popupWithForm = new PopupWithForm(".popup_type_profile", (data) => {

@@ -1,4 +1,4 @@
-import Popup from "./src/components/Popup.js";
+import Popup from "./Popup.js";
 
 export default class PopupWithImage extends Popup {
   open(data) {
