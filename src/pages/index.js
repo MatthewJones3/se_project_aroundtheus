@@ -151,10 +151,10 @@ addNewCardButton.addEventListener("click", () => {
 /*initialCards.forEach((cardData) => {
   const card = new Card(cardData, "#card-template", handleImageClick);
   cardListEl.prepend(card.generateCard());*/
-initialCards.forEach((cardData) => {
+/*initialCards.forEach((cardData) => {
   const card = createCard(cardData);
   cardListEl.prepend(card);
-});
+});*/
 
 /*function createCard(item) {
   const card = new Card(item, "#card-template", handleImageClick);
