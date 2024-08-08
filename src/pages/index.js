@@ -49,7 +49,7 @@ const UserInfoInstance = new UserInfo({
 const popupWithImage = new PopupWithImage("#preview-popup");
 popupWithImage.setEventListeners();
 
-const popupWithForm = new PopupWithForm(".popup_type_profile", (data) => {
+const popupWithForm = new PopupWithForm("#profile-edit-modal", (data) => {
   UserInfo.setUserInfo(data);
   popupWithForm.close();
 });
