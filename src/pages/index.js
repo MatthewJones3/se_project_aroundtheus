@@ -41,19 +41,31 @@ const settings = {
   errorClass: "modal__input-error_active",
 };
 
-const UserInfoInstance = new UserInfo({
-  nameSelector: ".profile__name",
-  jobSelector: ".profile__job",
+// Initialize instances
+const userInfoInstance = new UserInfo({
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__description",
 });
 
 const popupWithImage = new PopupWithImage("#preview-popup");
 popupWithImage.setEventListeners();
 
-const popupWithForm = new PopupWithForm("#profile-edit-modal", (data) => {
-  UserInfo.setUserInfo(data);
-  popupWithForm.close();
+const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
+  userInfoInstance.setUserInfo(data);
+  profileEditPopup.close();
 });
-popupWithForm.setEventListeners();
+profileEditPopup.setEventListeners();
+
+/*const addCardPopup = new PopupWithForm(
+  "#add-card-modal",
+  handleAddCardFormSubmit
+);
+addCardPopup.setEventListeners();*/
+
+const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
+  handleAddCardFormSubmit(data);
+});
+addCardPopup.setEventListeners();
 
 const section = new Section(
   {
@@ -65,7 +77,7 @@ const section = new Section(
   },
   ".cards"
 );
-section.renderItems(); // I have no idea if this "section.renderItems" is correct
+section.renderItems();
 
 /* Elements (For my own purposes)*/
 const profileEditButton = document.querySelector("#profile-edit-button");
@@ -101,12 +113,9 @@ editFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(settings, addCardFormElement);
 addCardFormValidator.enableValidation();
 
-/* Function to handle image click */
 function handleImageClick(name, link) {
-  previewImageElement.src = link;
-  previewImageElement.alt = name;
-  previewTitleModalWindow.textContent = name;
-  openModal(previewImageModalWindow);
+  popupWithImage.open();
+  popupWithImage.setContent(name, link);
 }
 
 function createCard(item) {
@@ -118,61 +127,28 @@ function createCard(item) {
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  openModal(profileEditModal);
+  profileEditPopup.open(); // Use the method from PopupWithForm instance
 });
 
 profileEditCloseButton.addEventListener("click", () => {
-  closeModal(profileEditModal);
-});
-
-profileEditForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  profileTitle.textContent = profileTitleInput.value;
-  profileDescription.textContent = profileDescriptionInput.value;
-  closeModal(profileEditModal);
-});
-
-addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
-
-addNewCardButton.addEventListener("click", () => openModal(addCardModal));
-addCardModalCloseButton.addEventListener("click", () =>
-  closeModal(addCardModal)
-);
-
-previewPopupCloseButton.addEventListener("click", () => {
-  closeModal(previewImageModalWindow);
+  profileEditPopup.close(); // Use the method from PopupWithForm instance
 });
 
 addNewCardButton.addEventListener("click", () => {
-  openModal(addCardModal);
+  addCardPopup.open(); // Use the method from PopupWithForm instance
 });
 
-/* Initial Rendering of Cards */
-/*initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#card-template", handleImageClick);
-  cardListEl.prepend(card.generateCard());*/
-/*initialCards.forEach((cardData) => {
-  const card = createCard(cardData);
-  cardListEl.prepend(card);
-});*/
+addCardModalCloseButton.addEventListener("click", () => {
+  addCardPopup.close(); // Use the method from PopupWithForm instance
+});
 
-/*function createCard(item) {
-  const card = new Card(item, "#card-template", handleImageClick);
-  return card.generateCard();
-}*/
+previewPopupCloseButton.addEventListener("click", () => {
+  popupWithImage.close(); // Use the method from PopupWithImage instance
+});
 
-//initialCards.forEach((cardData) => ------ I deleted this duplicate rather than the other, as my cards disappeared when I did the other. Still, duplicate gone.
-//const card = createCard(cardData);
-//cardListEl.prepend(card);
-/*function createCard(cardData) {
-  const card = new Card(cardData, "#card-template", handleImageClick);
-  cardListEl.prepend(card.generateCard());
-}*/
-
-function handleAddCardFormSubmit(evt) {
-  evt.preventDefault();
-  const titleValue = cardTitleInput.value.trim();
-  const urlValue = cardUrlInput.value.trim();
+/*function handleAddCardFormSubmit(data) {
+  const titleValue = data.name.trim();
+  const urlValue = data.link.trim();
   if (!titleValue || !urlValue) {
     return;
   }
@@ -180,48 +156,29 @@ function handleAddCardFormSubmit(evt) {
     name: titleValue,
     link: urlValue,
   };
-  //const card = new Card(cardData, "#card-template", handleImageClick);
   const card = createCard(cardData);
   cardListEl.prepend(card);
-  cardTitleInput.value = "";
-  cardUrlInput.value = "";
-  //const submitButton = addCardFormElement.querySelector(".modal__button");
   addCardFormElement.reset();
   addCardFormValidator.resetValidation();
-  //submitButton.setAttribute("disabled", true); commented out not deleted just in case
-  //submitButton.classList.add("modal__submit-button_inactive");
-  closeModal(addCardModal);
-}
-
-function closeModalOnEvent(event) {
-  const modals = [profileEditModal, addCardModal, previewImageModalWindow];
-
-  if (event.type === "keydown" && event.key === "Escape") {
-    modals.forEach((modal) => closeModal(modal));
-  }
-
-  if (event.type === "click") {
-    const clickedOutsideModal = modals.find((modal) => event.target === modal);
-    if (clickedOutsideModal) {
-      closeModal(clickedOutsideModal);
-    }
-  }
-}
-
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-  window.addEventListener("keydown", closeModalOnEvent);
-  document.addEventListener("click", closeModalOnEvent);
-}
-
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-  window.removeEventListener("keydown", closeModalOnEvent);
-  document.removeEventListener("click", closeModalOnEvent);
-}
-
-/*function resetForm(form) {
-  form.reset();
-  const formValidator = new FormValidator(validationConfig, form);
-  formValidator.resetValidation();
 }*/
+
+function handleAddCardFormSubmit(data) {
+  if (!data || !data.name || !data.link) {
+    console.error("Invalid data provided");
+    return;
+  }
+  const titleValue = data.name.trim();
+  const urlValue = data.link.trim();
+  if (!titleValue || !urlValue) {
+    console.error("Title or URL is missing");
+    return;
+  }
+  const cardData = {
+    name: titleValue,
+    link: urlValue,
+  };
+  const card = createCard(cardData);
+  cardListEl.prepend(card);
+  addCardFormElement.reset();
+  addCardFormValidator.resetValidation();
+}
