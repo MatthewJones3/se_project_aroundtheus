@@ -5,8 +5,9 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import { initialCards, settings } from "../utils/constants.js";
 
-const initialCards = [
+/*const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -39,7 +40,7 @@ const settings = {
   inactiveButtonClass: "modal__submit-button_inactive",
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__input-error_active",
-};
+};*/
 
 // Initialize instances
 const userInfoInstance = new UserInfo({
@@ -75,7 +76,7 @@ const section = new Section(
       section.addItem(card);
     },
   },
-  ".cards"
+  ".cards__list"
 );
 section.renderItems();
 

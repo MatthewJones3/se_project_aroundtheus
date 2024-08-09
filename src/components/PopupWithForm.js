@@ -83,4 +83,15 @@ export default class PopupWithForm extends Popup {
       this._handleFormSubmit(this._getInputValues());
     });
   }
+  _handleFormSubmit(evt) {
+    evt.preventDefault();
+
+    const formData = new FormData(this._formElement);
+    const data = {
+      name: formData.get("title"),
+      link: formData.get("URL"),
+    };
+
+    this._handleSubmit(data);
+  }
 }

@@ -38,10 +38,10 @@ export default class UserInfo {
     };
   }
 
-  setUserInfo({ name, job }) {
+  setUserInfo({ title, description }) {
     if (this._nameElement && this._jobElement) {
-      this._nameElement.textContent = name;
-      this._jobElement.textContent = job;
+      this._nameElement.textContent = title;
+      this._jobElement.textContent = description;
     } else {
       console.error("UserInfo elements not found");
     }
