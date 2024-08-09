@@ -7,41 +7,6 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards, settings } from "../utils/constants.js";
 
-/*const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
-
-const settings = {
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__submit-button_inactive",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__input-error_active",
-};*/
-
 // Initialize instances
 const userInfoInstance = new UserInfo({
   nameSelector: ".profile__title",
@@ -115,8 +80,9 @@ const addCardFormValidator = new FormValidator(settings, addCardFormElement);
 addCardFormValidator.enableValidation();
 
 function handleImageClick(name, link) {
-  popupWithImage.open();
   popupWithImage.setContent(name, link);
+  popupWithImage.open();
+  //popupWithImage.setContent(name, link);
 }
 
 function createCard(item) {
@@ -128,40 +94,24 @@ function createCard(item) {
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-  profileEditPopup.open(); // Use the method from PopupWithForm instance
+  profileEditPopup.open();
 });
 
 profileEditCloseButton.addEventListener("click", () => {
-  profileEditPopup.close(); // Use the method from PopupWithForm instance
+  profileEditPopup.close();
 });
 
 addNewCardButton.addEventListener("click", () => {
-  addCardPopup.open(); // Use the method from PopupWithForm instance
+  addCardPopup.open();
 });
 
 addCardModalCloseButton.addEventListener("click", () => {
-  addCardPopup.close(); // Use the method from PopupWithForm instance
+  addCardPopup.close();
 });
 
 previewPopupCloseButton.addEventListener("click", () => {
-  popupWithImage.close(); // Use the method from PopupWithImage instance
+  popupWithImage.close();
 });
-
-/*function handleAddCardFormSubmit(data) {
-  const titleValue = data.name.trim();
-  const urlValue = data.link.trim();
-  if (!titleValue || !urlValue) {
-    return;
-  }
-  const cardData = {
-    name: titleValue,
-    link: urlValue,
-  };
-  const card = createCard(cardData);
-  cardListEl.prepend(card);
-  addCardFormElement.reset();
-  addCardFormValidator.resetValidation();
-}*/
 
 function handleAddCardFormSubmit(data) {
   if (!data || !data.name || !data.link) {
