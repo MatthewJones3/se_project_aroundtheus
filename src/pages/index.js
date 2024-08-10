@@ -134,4 +134,5 @@ function handleAddCardFormSubmit(data) {
   cardListEl.prepend(card);
   addCardFormElement.reset();
   addCardFormValidator.resetValidation();
+  addCardPopup.close();
 }
