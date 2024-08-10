@@ -115,13 +115,15 @@ previewPopupCloseButton.addEventListener("click", () => {
 
 function handleAddCardFormSubmit(data) {
   if (!data || !data.name || !data.link) {
-    console.error("Invalid data provided");
+    console.error(
+      "Invalid data provided. Ensure 'data' contains 'name' and 'link' properties."
+    );
     return;
   }
   const titleValue = data.name.trim();
   const urlValue = data.link.trim();
   if (!titleValue || !urlValue) {
-    console.error("Title or URL is missing");
+    console.error("Title or URL is missing or empty after trimming.");
     return;
   }
   const cardData = {
