@@ -80,8 +80,8 @@ const addCardFormValidator = new FormValidator(settings, addCardFormElement);
 addCardFormValidator.enableValidation();
 
 function handleImageClick(name, link) {
-  popupWithImage.open(name, link); //does not open the image with name or link with this code itself and without setContent
-  popupWithImage.setContent(name, link);
+  popupWithImage.open(name, link);
+  //popupWithImage.setContent(name, link); //commented out just to keep for time being
 }
 
 function createCard(item) {
@@ -92,8 +92,8 @@ function createCard(item) {
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {
   const userInfo = userInfoInstance.getUserInfo();
-  //profileTitleInput.value = profileTitle.textContent;
-  //profileDescriptionInput.value = profileDescription.textContent;
+  profileTitleInput.value = profileTitle.textContent;
+  profileDescriptionInput.value = profileDescription.textContent;
   profileEditPopup.open();
 });
 
@@ -123,6 +123,6 @@ function handleAddCardFormSubmit(data) {
   section.addItem(card);
   addCardFormElement.reset();
   addCardFormValidator.resetValidation();
-  //addCardFormValidator.disableButton();
-  addCardPopup.close(); //a bit confused on this last one. popup wont close with addCardFormValidator.disableButton(); and my button is still disabled without it.
-} // if this is still incorrect, I will get with the tutors to try and resolve it.
+  //addCardFormValidator.disableButton(); //set disable in FormValidator. Popup now closes and disables the button.
+  addCardPopup.close();
+}
