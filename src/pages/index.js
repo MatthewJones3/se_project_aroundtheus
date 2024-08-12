@@ -92,10 +92,17 @@ function createCard(item) {
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {
   const userInfo = userInfoInstance.getUserInfo();
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent;
+  profileTitleInput.value = userInfo.name;
+  profileDescriptionInput.value = userInfo.job;
   profileEditPopup.open();
 });
+
+/*profileEditButton.addEventListener("click", () => {
+  const user = userInfoInstance.getUserInfo();
+  profileTitleInput.value = user.name;
+  profileDescriptionInput.value = user.job;
+  editProfilePopup.open();
+});*/
 
 addNewCardButton.addEventListener("click", () => {
   addCardPopup.open();
