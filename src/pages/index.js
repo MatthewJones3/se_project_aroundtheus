@@ -22,12 +22,6 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
 });
 profileEditPopup.setEventListeners();
 
-/*const addCardPopup = new PopupWithForm(
-  "#add-card-modal",
-  handleAddCardFormSubmit
-);
-addCardPopup.setEventListeners();*/
-
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   handleAddCardFormSubmit(data);
 });
@@ -78,6 +72,37 @@ editFormValidator.enableValidation();
 
 const addCardFormValidator = new FormValidator(settings, addCardFormElement);
 addCardFormValidator.enableValidation();
+const deleteConfirmationModal = document.querySelector(
+  "#delete-confirmation-modal"
+);
+const deleteConfirmationYes = document.querySelector(
+  "#delete-confirmation-yes"
+);
+const deleteConfirmationNo =
+  deleteConfirmationModal.querySelector(".modal__button");
+
+//
+function openDeleteConfirmationModal(cardElement) {
+  cardToDelete = cardElement;
+  deleteConfirmationModal.classList.add(".modal_open");
+}
+
+function closeDeleteConfirmationModal() {
+  deleteConfirmationModal.classList.remove(".modal_open");
+}
+
+deleteConfirmationYes.addEventListener("click", () => {
+  if (cardToDelete) {
+    cardToDelete.remove(); // Remove the card
+  }
+  closeDeleteConfirmationModal();
+});
+
+deleteConfirmationNo.addEventListener("click", () => {
+  closeDeleteConfirmationModal();
+});
+
+//
 
 function handleImageClick(name, link) {
   popupWithImage.open(name, link);
@@ -88,6 +113,21 @@ function createCard(item) {
   const card = new Card(item, "#card-template", handleImageClick);
   return card.generateCard();
 }
+//
+/*function createCard(item) {
+  const handleCardDelete = (cardElement) => {
+    openDeleteConfirmationModal(cardElement);
+  };
+
+  const card = new Card(
+    item,
+    "#card-template",
+    handleImageClick,
+    handleCardDelete
+  );
+  return card.generateCard();
+}*/
+//
 
 /* Event Listeners */
 profileEditButton.addEventListener("click", () => {
@@ -96,13 +136,6 @@ profileEditButton.addEventListener("click", () => {
   profileDescriptionInput.value = userInfo.job;
   profileEditPopup.open();
 });
-
-/*profileEditButton.addEventListener("click", () => {
-  const user = userInfoInstance.getUserInfo();
-  profileTitleInput.value = user.name;
-  profileDescriptionInput.value = user.job;
-  editProfilePopup.open();
-});*/
 
 addNewCardButton.addEventListener("click", () => {
   addCardPopup.open();
