@@ -39,12 +39,10 @@ const section = new Section(
 );
 section.renderItems();
 
-/* Elements (For my own purposes)*/
+/* Elements (For my own purposes) */
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileEditCloseButton = profileEditModal.querySelector(".modal__close");
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
 const profileTitleInput = document.querySelector("#profile-title-input");
 const profileDescriptionInput = document.querySelector(
   "#profile-description-input"
@@ -72,23 +70,32 @@ editFormValidator.enableValidation();
 
 const addCardFormValidator = new FormValidator(settings, addCardFormElement);
 addCardFormValidator.enableValidation();
+
 const deleteConfirmationModal = document.querySelector(
   "#delete-confirmation-modal"
 );
-const deleteConfirmationYes = document.querySelector(
+const deleteConfirmationYes = deleteConfirmationModal.querySelector(
   "#delete-confirmation-yes"
 );
 const deleteConfirmationNo =
   deleteConfirmationModal.querySelector(".modal__button");
 
-//
-function openDeleteConfirmationModal(cardElement) {
-  cardToDelete = cardElement;
-  deleteConfirmationModal.classList.add(".modal_open");
-}
+let cardToDelete = null;
 
+/*function openDeleteConfirmationModal(cardElement) {
+  cardToDelete = cardElement;
+  deleteConfirmationModal.classList.add(".modal_opened");
+}*/
+//
+function openDeleteConfirm(card) {
+  deleteConfirm.setSubmitAction(() => {
+    api.deleteCard(card._id).then().catch();
+  });
+  openDeleteConfirm.open();
+}
+//
 function closeDeleteConfirmationModal() {
-  deleteConfirmationModal.classList.remove(".modal_open");
+  deleteConfirmationModal.classList.remove(".modal_opened");
 }
 
 deleteConfirmationYes.addEventListener("click", () => {
@@ -102,21 +109,13 @@ deleteConfirmationNo.addEventListener("click", () => {
   closeDeleteConfirmationModal();
 });
 
-//
-
 function handleImageClick(name, link) {
   popupWithImage.open(name, link);
-  //popupWithImage.setContent(name, link); //commented out just to keep for time being
 }
 
 function createCard(item) {
-  const card = new Card(item, "#card-template", handleImageClick);
-  return card.generateCard();
-}
-//
-/*function createCard(item) {
   const handleCardDelete = (cardElement) => {
-    openDeleteConfirmationModal(cardElement);
+    openDeleteConfirm(cardElement);
   };
 
   const card = new Card(
@@ -126,10 +125,8 @@ function createCard(item) {
     handleCardDelete
   );
   return card.generateCard();
-}*/
-//
+}
 
-/* Event Listeners */
 profileEditButton.addEventListener("click", () => {
   const userInfo = userInfoInstance.getUserInfo();
   profileTitleInput.value = userInfo.name;
@@ -159,10 +156,8 @@ function handleAddCardFormSubmit(data) {
     link: urlValue,
   };
   const card = createCard(cardData);
-  //cardListEl.prepend(card);
   section.addItem(card);
   addCardFormElement.reset();
   addCardFormValidator.resetValidation();
-  //addCardFormValidator.disableButton(); //set disable in FormValidator. Popup now closes and disables the button.
   addCardPopup.close();
 }
