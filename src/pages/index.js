@@ -6,6 +6,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards, settings } from "../utils/constants.js";
+import Api from "../components/api.js";
 
 // Initialize instances
 const userInfoInstance = new UserInfo({
@@ -91,7 +92,7 @@ function openDeleteConfirm(card) {
   deleteConfirm.setSubmitAction(() => {
     api.deleteCard(card._id).then().catch();
   });
-  openDeleteConfirm.open();
+  deleteConfirm.open();
 }
 //
 function closeDeleteConfirmationModal() {
@@ -161,3 +162,13 @@ function handleAddCardFormSubmit(data) {
   addCardFormValidator.resetValidation();
   addCardPopup.close();
 }
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "3b106730-7f1e-4891-8b91-475561e3309f",
+    "Content-Type": "application/json",
+  },
+});
+
+api.getCards().then((res) => console.log(res));

@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -146,10 +146,3 @@ class Api {
     return Promise.all([this.getUserInfo(), this.getCards()]);
   }
 }
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "3b106730-7f1e-4891-8b91-475561e3309f",
-    "Content-Type": "application/json",
-  },
-});
