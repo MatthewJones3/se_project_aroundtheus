@@ -81,35 +81,54 @@ const deleteConfirmationYes = deleteConfirmationModal.querySelector(
 const deleteConfirmationNo =
   deleteConfirmationModal.querySelector(".modal__button");
 
-let cardToDelete = null;
+//let cardToDelete = null;
+const deleteConfirm = new PopupWithConfirm("#delete-confirmation-modal");
+deleteConfirm.setEventListeners();
 
 /*function openDeleteConfirmationModal(cardElement) {
   cardToDelete = cardElement;
   deleteConfirmationModal.classList.add(".modal_opened");
 }*/
 //
-function openDeleteConfirm(card) {
+/*function openDeleteConfirm(card) {
   deleteConfirm.setSubmitAction(() => {
     api.deleteCard(card._id).then().catch();
   });
   deleteConfirm.open();
 }
-//
+
 function closeDeleteConfirmationModal() {
   deleteConfirmationModal.classList.remove(".modal_opened");
 }
 
 deleteConfirmationYes.addEventListener("click", () => {
   if (cardToDelete) {
-    cardToDelete.remove(); // Remove the card
+    cardToDelete.remove(); 
   }
   closeDeleteConfirmationModal();
 });
 
 deleteConfirmationNo.addEventListener("click", () => {
   closeDeleteConfirmationModal();
-});
+});*/
+//
 
+function openDeleteConfirm(card) {
+  deleteConfirm.open();
+
+  deleteConfirm.setSubmitAction(() => {
+    api
+      .removeCard(card.getId())
+      .then(() => {
+        card.removeCard();
+        deleteConfirm.close();
+      })
+      .catch((err) =>
+        console.error(`An error occurred when deleting the card: ${err}`)
+      );
+  });
+}
+//
 function handleImageClick(name, link) {
   popupWithImage.open(name, link);
 }
