@@ -138,9 +138,46 @@
     </div>
 
     <div class="modal modal_confirmation" id="delete-confirmation-modal">
-      <div class="modal__container">
+      <div class="modal__container modal__container_delete">
         <h3 class="modal__heading">Are you sure?</h3>
-        <button class="modal__button" id="delete-confirmation-yes">Yes</button>
+        <form class="modal__form" id="confirm-delete">
+          <button class="modal__close" type="button"></button>
+          <button
+            class="modal__button modal__button_delete"
+            type="submit"
+            id="delete-confirmation-yes"
+          >
+            Yes
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="edit-picture-modal">
+      <div class="modal__container">
+        <h3 class="modal__heading">Change Profile Picture</h3>
+        <form class="modal__form" id="edit-profile-picture">
+          <button class="modal__close" type="button"></button>
+          <input
+            class="modal__input modal__input_type_url"
+            type="url"
+            name="link"
+            id="avatar-URL-input"
+            placeholder="Avatar URL"
+            required
+          />
+          <span
+            class="modal__error modal__error_url"
+            id="avatar-URL-input-error"
+          ></span>
+          <button
+            class="modal__button modal__button_disabled"
+            type="submit"
+            disabled
+          >
+            Save
+          </button>
+        </form>
       </div>
     </div>
 

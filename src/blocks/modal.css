@@ -189,9 +189,21 @@
   color: #fff;
 }
 
-.modal_confirmation {
+/*.modal_confirmation {
   width: 430px;
   height: 181px;
+  margin: auto;
+}*/
+
+.modal__container_delete {
+  width: 430px;
+  height: 181px;
+  margin: auto;
+}
+
+.modal__button_delete {
+  margin-top: 15px;
+  border-radius: 2px;
 }
 
 /*move close button at 630px */

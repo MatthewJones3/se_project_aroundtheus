@@ -7,6 +7,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { initialCards, settings } from "../utils/constants.js";
 import Api from "../components/api.js";
+import PopupWithConfirm from "../components/PopupWithConfirm.js";
 
 // Initialize instances
 const userInfoInstance = new UserInfo({
@@ -30,7 +31,6 @@ addCardPopup.setEventListeners();
 
 const section = new Section(
   {
-    items: initialCards,
     renderer: (item) => {
       const card = createCard(item);
       section.addItem(card);
@@ -38,8 +38,16 @@ const section = new Section(
   },
   ".cards__list"
 );
-section.renderItems();
 
+const editPicturePopup = new PopupWithForm("#edit-picture-modal", (data) => {
+  handleEditPictureFormSubmit(data);
+});
+editPicturePopup.setEventListeners();
+
+const profileEditIcon = document.querySelector(".profile__edit-icon");
+profileEditIcon.addEventListener("click", () => {
+  editPicturePopup.open();
+});
 /* Elements (For my own purposes) */
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
@@ -72,54 +80,71 @@ editFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(settings, addCardFormElement);
 addCardFormValidator.enableValidation();
 
-const deleteConfirmationModal = document.querySelector(
-  "#delete-confirmation-modal"
-);
-const deleteConfirmationYes = deleteConfirmationModal.querySelector(
-  "#delete-confirmation-yes"
-);
-const deleteConfirmationNo =
-  deleteConfirmationModal.querySelector(".modal__button");
-
 //let cardToDelete = null;
 const deleteConfirm = new PopupWithConfirm("#delete-confirmation-modal");
 deleteConfirm.setEventListeners();
 
-/*function openDeleteConfirmationModal(cardElement) {
-  cardToDelete = cardElement;
-  deleteConfirmationModal.classList.add(".modal_opened");
-}*/
-//
 /*function openDeleteConfirm(card) {
-  deleteConfirm.setSubmitAction(() => {
-    api.deleteCard(card._id).then().catch();
-  });
-  deleteConfirm.open();
-}
-
-function closeDeleteConfirmationModal() {
-  deleteConfirmationModal.classList.remove(".modal_opened");
-}
-
-deleteConfirmationYes.addEventListener("click", () => {
-  if (cardToDelete) {
-    cardToDelete.remove(); 
+  if (!card || typeof card.getId !== "function") {
+    console.error("Invalid card object passed to openDeleteConfirm", card);
+    return;
   }
-  closeDeleteConfirmationModal();
-});
-
-deleteConfirmationNo.addEventListener("click", () => {
-  closeDeleteConfirmationModal();
-});*/
-//
-
-function openDeleteConfirm(card) {
   deleteConfirm.open();
 
   deleteConfirm.setSubmitAction(() => {
     api
       .removeCard(card.getId())
       .then(() => {
+        card.removeCard();
+        deleteConfirm.close();
+      })
+      .catch((err) =>
+        console.error(`An error occurred when deleting the card: ${err}`)
+      );
+  });
+}*/
+
+function handleEditPictureFormSubmit(data) {
+  if (!data || !data.link) {
+    console.error(
+      "Invalid data provided. Ensure 'data' contains 'link' property."
+    );
+    return;
+  }
+  const avatarUrl = data.link.trim();
+  if (!avatarUrl) {
+    console.error("Avatar URL is missing or empty after trimming.");
+    return;
+  }
+  api
+    .updateAvatar(avatarUrl)
+    .then((res) => {
+      if (res && res.avatar) {
+        userInfoInstance.setUserInfo({ avatar: res.avatar });
+        editPicturePopup.close();
+      } else {
+        console.error("Invalid response format from API:", res);
+      }
+    })
+    .catch((err) => {
+      console.error(`An error occurred while updating the avatar: ${err}`);
+    });
+}
+
+function openDeleteConfirm(card) {
+  if (!card || typeof card.getId !== "function") {
+    console.error("Invalid card object passed to openDeleteConfirm", card);
+    return;
+  }
+
+  console.log("Card ID for deletion:", card.getId()); // Log card ID for debugging
+  deleteConfirm.open();
+
+  deleteConfirm.setSubmitAction(() => {
+    api
+      .deleteCard(card.getId()) // Consistent method naming: deleteCard
+      .then(() => {
+        console.log("Card deleted successfully"); // Confirm successful deletion
         card.removeCard();
         deleteConfirm.close();
       })
@@ -142,7 +167,8 @@ function createCard(item) {
     item,
     "#card-template",
     handleImageClick,
-    handleCardDelete
+    handleCardDelete,
+    openDeleteConfirm
   );
   return card.generateCard();
 }
@@ -165,21 +191,36 @@ function handleAddCardFormSubmit(data) {
     );
     return;
   }
+
   const titleValue = data.name.trim();
   const urlValue = data.link.trim();
+
   if (!titleValue || !urlValue) {
     console.error("Title or URL is missing or empty after trimming.");
     return;
   }
+
   const cardData = {
     name: titleValue,
     link: urlValue,
   };
-  const card = createCard(cardData);
-  section.addItem(card);
-  addCardFormElement.reset();
-  addCardFormValidator.resetValidation();
-  addCardPopup.close();
+  console.log("Card Data:", cardData);
+  api
+    .addCard(cardData.name, cardData.link)
+    .then((res) => {
+      if (res && res.name && res.link) {
+        const card = createCard(res);
+        section.addItem(card);
+        addCardFormElement.reset();
+        addCardFormValidator.resetValidation();
+        addCardPopup.close();
+      } else {
+        console.error("Invalid response format from API:", res);
+      }
+    })
+    .catch((err) => {
+      console.error(`An error occurred while adding the card: ${err}`);
+    });
 }
 
 const api = new Api({
@@ -190,4 +231,6 @@ const api = new Api({
   },
 });
 
-api.getCards().then((res) => console.log(res));
+api.getCards().then((cards) => {
+  section.renderItems(cards);
+});

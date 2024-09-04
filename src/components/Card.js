@@ -1,12 +1,18 @@
 /*export default class Card {
-  constructor(data, templateSelector, handleImageClick) {
+  constructor(
+    data,
+    templateSelector,
+    handleImageClick,
+    handleCardDelete,
+    handleDeleteButton
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
     this._handleCardDelete = handleCardDelete;
-    this._element = this._getTemplate();
-    this._setEventListeners();
+    this._handleDeleteButton = handleDeleteButton;
+    //this._setEventListeners();
   }
 
   _getTemplate() {
@@ -25,11 +31,9 @@
         this._handleLikeButton();
       });
 
-    this._element
-      .querySelector(".card__delete-button")
-      .addEventListener("click", () => {
-        this._handleDeleteButton();
-      });
+    this._deleteButton.addEventListener("click", () => {
+      this._handleDeleteButton(this);
+    });
 
     this._element
       .querySelector(".card__image")
@@ -44,113 +48,44 @@
       .classList.toggle("card__like-button_active");
   }
 
-  _handleDeleteButton() {
-    this._element.remove();
-  }
-
   _handleImageClick() {
     this._handleImageClick(this._name, this._link);
   }
 
   generateCard() {
-    this._setCardData();
-    return this._element;
-  }
-
-  _setCardData() {
-    const cardImageEl = this._element.querySelector(".card__image");
-    const cardTitleEl = this._element.querySelector(".card__title");
-
-    cardImageEl.src = this._link;
-    cardImageEl.alt = this._name;
-    cardTitleEl.textContent = this._name;
-  }
-}*/
-
-/*export default class Card {
-  constructor(data, templateSelector, handleImageClick, handleCardDelete) {
-    this._name = data.name;
-    this._link = data.link;
-    this._templateSelector = templateSelector;
-    this._handleImageClick = handleImageClick;
-    this._handleCardDelete = handleCardDelete; // New callback
     this._element = this._getTemplate();
+
+    this._cardImageEl = this._element.querySelector(".card__image");
+    this._cardTitleEl = this._element.querySelector(".card__title");
+    this._deleteButton = this._element.querySelector(".card__delete-button");
+    // select lkike button and replace reference in setEventListeners
+    this._cardImageEl.src = this._link;
+    this._cardImageEl.alt = this._name;
+    this._cardTitleEl.textContent = this._name;
     this._setEventListeners();
-  }
-
-  _getTemplate() {
-    const cardElement = document
-      .querySelector(this._templateSelector)
-      .content.querySelector(".card")
-      .cloneNode(true);
-
-    return cardElement;
-  }
-
-  _setEventListeners() {
-    this._element
-      .querySelector(".card__like-button")
-      .addEventListener("click", () => {
-        this._handleLikeButton();
-      });
-
-    this._element
-      .querySelector(".card__delete-button")
-      .addEventListener("click", () => {
-        this._handleCardDelete();
-        //handleDeleteButton
-      });
-
-    this._element
-      .querySelector(".card__image")
-      .addEventListener("click", () => {
-        this._handleImageClick(this._name, this._link);
-      });
-  }
-
-  _handleLikeButton() {
-    this._element
-      .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_active");
-  }
-  //
-  _handleCardDelete() {
-    //handleCardDelete
-    if (typeof this._handleCardDelete === "function") {
-      this._handleDeleteButton(this._element);
-    } else {
-      console.error("handleCardDelete is not a function");
-    }
-  }
-  //
-  _handleImageClick() {
-    this._handleImageClick(this._name, this._link);
-  }
-
-  generateCard() {
-    this._setCardData();
     return this._element;
-  }
-
-  _setCardData() {
-    const cardImageEl = this._element.querySelector(".card__image");
-    const cardTitleEl = this._element.querySelector(".card__title");
-
-    cardImageEl.src = this._link;
-    cardImageEl.alt = this._name;
-    cardTitleEl.textContent = this._name;
   }
 }*/
 
 export default class Card {
-  constructor(data, templateSelector, handleImageClick, handleCardDelete) {
+  constructor(
+    data,
+    templateSelector,
+    handleImageClick,
+    handleCardDelete,
+    handleDeleteButton
+  ) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
-    this._handleCardDelete = handleCardDelete; // New callback
-    this._element = this._getTemplate();
-    this._setEventListeners();
+    this._handleCardDelete = handleCardDelete;
+    this._handleDeleteButton = handleDeleteButton;
+  }
+
+  getId() {
+    return this._id;
   }
 
   _getTemplate() {
@@ -169,11 +104,9 @@ export default class Card {
         this._handleLikeButton();
       });
 
-    this._element
-      .querySelector(".card__delete-button")
-      .addEventListener("click", () => {
-        this._handleCardDelete(this._element); // Pass the element to the delete handler
-      });
+    this._deleteButton.addEventListener("click", () => {
+      this._handleDeleteButton(this);
+    });
 
     this._element
       .querySelector(".card__image")
@@ -193,16 +126,23 @@ export default class Card {
   }
 
   generateCard() {
-    this._setCardData();
+    this._element = this._getTemplate();
+
+    this._cardImageEl = this._element.querySelector(".card__image");
+    this._cardTitleEl = this._element.querySelector(".card__title");
+    this._deleteButton = this._element.querySelector(".card__delete-button");
+
+    this._cardImageEl.src = this._link;
+    this._cardImageEl.alt = this._name;
+    this._cardTitleEl.textContent = this._name;
+
+    this._setEventListeners();
+
     return this._element;
   }
 
-  _setCardData() {
-    const cardImageEl = this._element.querySelector(".card__image");
-    const cardTitleEl = this._element.querySelector(".card__title");
-
-    cardImageEl.src = this._link;
-    cardImageEl.alt = this._name;
-    cardTitleEl.textContent = this._name;
+  removeCard() {
+    this._element.remove();
+    this._element = null;
   }
 }
