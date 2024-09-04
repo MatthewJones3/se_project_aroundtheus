@@ -72,20 +72,24 @@
   margin-right: 24px;
 }
 
-.profile__edit-icon {
-  position: absolute;
-  top: 60%;
-  left: 8%;
-  transform: translate(-50%, -50%);
-  width: 26px;
-  height: 26px;
-  background: transparent url(../images/editprofpic.svg) center no-repeat;
-  background-size: contain;
-  opacity: 0;
-  pointer-events: none;
+.profile__image-container {
+  position: relative;
 }
 
-.profile__image:hover + .profile__edit-icon {
+.profile__image-button {
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  left: 0px;
+  width: 120px;
+  height: 120px;
+  background: transparent url(../images/editprofpic.svg) center no-repeat;
+  background-size: 26px 26px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.profile__image:hover + .profile__image-button {
   opacity: 90%;
   cursor: pointer;
 }
