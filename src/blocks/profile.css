@@ -89,9 +89,15 @@
   opacity: 0;
 }
 
-.profile__image:hover + .profile__image-button {
-  opacity: 90%;
+.profile__edit-icon {
+  background: transparent url(../images/editprofpic.svg) center no-repeat;
+  height: 26px;
+  width: 26px;
   cursor: pointer;
+}
+
+.profile__edit-icon:hover {
+  opacity: 60%;
 }
 
 .profile__add-button:hover {
