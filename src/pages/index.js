@@ -13,6 +13,7 @@ import PopupWithConfirm from "../components/PopupWithConfirm.js";
 const userInfoInstance = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatarSelector: ".profile__image",
 });
 
 const popupWithImage = new PopupWithImage("#preview-popup");
@@ -83,6 +84,13 @@ addCardFormValidator.enableValidation();
 //let cardToDelete = null;
 const deleteConfirm = new PopupWithConfirm("#delete-confirmation-modal");
 deleteConfirm.setEventListeners();
+
+const editPictureFormElement = document.querySelector("#edit-profile-picture");
+const editPictureFormValidator = new FormValidator(
+  settings,
+  editPictureFormElement
+);
+editPictureFormValidator.enableValidation();
 
 /*function openDeleteConfirm(card) {
   if (!card || typeof card.getId !== "function") {
