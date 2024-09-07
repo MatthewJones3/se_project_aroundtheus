@@ -16,10 +16,26 @@ export default class UserInfo {
     };
   }
 
-  setUserInfo({ title, description }) {
+  /*setUserInfo({ title, description }) {
     if (this._nameElement && this._jobElement) {
       this._nameElement.textContent = title;
       this._jobElement.textContent = description;
+    } else {
+      console.error("UserInfo elements not found");
+    }
+  }
+
+  setUserAvatar(avatar) {
+    if (this._avatarElement) {
+      this._avatarElement.src = avatar;
+    } else {
+      console.error("Avatar element not found");
+    }
+  }*/
+  setUserInfo({ name, job }) {
+    if (this._nameElement && this._jobElement) {
+      this._nameElement.textContent = name || this._nameElement.textContent;
+      this._jobElement.textContent = job || this._jobElement.textContent;
     } else {
       console.error("UserInfo elements not found");
     }

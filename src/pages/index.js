@@ -9,7 +9,6 @@ import { initialCards, settings } from "../utils/constants.js";
 import Api from "../components/api.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js";
 
-// Initialize instances
 const userInfoInstance = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
@@ -45,10 +44,18 @@ const editPicturePopup = new PopupWithForm("#edit-picture-modal", (data) => {
 });
 editPicturePopup.setEventListeners();
 
+/*const profileEditIcon = document.querySelector(".profile__edit-icon");
+profileEditIcon.addEventListener("click", () => {
+  editPicturePopup.open();
+});*/
+
+//
 const profileEditIcon = document.querySelector(".profile__edit-icon");
 profileEditIcon.addEventListener("click", () => {
   editPicturePopup.open();
 });
+//
+
 /* Elements (For my own purposes) */
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
@@ -85,34 +92,23 @@ addCardFormValidator.enableValidation();
 const deleteConfirm = new PopupWithConfirm("#delete-confirmation-modal");
 deleteConfirm.setEventListeners();
 
+/*const editPictureFormElement = document.querySelector("#edit-profile-picture");
+const editPictureFormValidator = new FormValidator(
+  settings,
+  editPictureFormElement
+);
+editPictureFormValidator.enableValidation();*/
+
+//
 const editPictureFormElement = document.querySelector("#edit-profile-picture");
 const editPictureFormValidator = new FormValidator(
   settings,
   editPictureFormElement
 );
 editPictureFormValidator.enableValidation();
+//
 
-/*function openDeleteConfirm(card) {
-  if (!card || typeof card.getId !== "function") {
-    console.error("Invalid card object passed to openDeleteConfirm", card);
-    return;
-  }
-  deleteConfirm.open();
-
-  deleteConfirm.setSubmitAction(() => {
-    api
-      .removeCard(card.getId())
-      .then(() => {
-        card.removeCard();
-        deleteConfirm.close();
-      })
-      .catch((err) =>
-        console.error(`An error occurred when deleting the card: ${err}`)
-      );
-  });
-}*/
-
-function handleEditPictureFormSubmit(data) {
+/*function handleEditPictureFormSubmit(data) {
   if (!data || !data.link) {
     console.error(
       "Invalid data provided. Ensure 'data' contains 'link' property."
@@ -137,7 +133,35 @@ function handleEditPictureFormSubmit(data) {
     .catch((err) => {
       console.error(`An error occurred while updating the avatar: ${err}`);
     });
+}*/
+//
+function handleEditPictureFormSubmit(data) {
+  if (!data || !data.link) {
+    console.error(
+      "Invalid data provided. Ensure 'data' contains 'link' property."
+    );
+    return;
+  }
+  const avatarUrl = data.link.trim();
+  if (!avatarUrl) {
+    console.error("Avatar URL is missing or empty after trimming.");
+    return;
+  }
+  api
+    .updateAvatar(avatarUrl)
+    .then((res) => {
+      if (res && res.avatar) {
+        userInfoInstance.setUserAvatar(res.avatar);
+        editPicturePopup.close();
+      } else {
+        console.error("Invalid response format from API:", res);
+      }
+    })
+    .catch((err) => {
+      console.error(`An error occurred while updating the avatar: ${err}`);
+    });
 }
+//
 
 function openDeleteConfirm(card) {
   if (!card || typeof card.getId !== "function") {
@@ -145,14 +169,14 @@ function openDeleteConfirm(card) {
     return;
   }
 
-  console.log("Card ID for deletion:", card.getId()); // Log card ID for debugging
+  console.log("Card ID for deletion:", card.getId());
   deleteConfirm.open();
 
   deleteConfirm.setSubmitAction(() => {
     api
-      .deleteCard(card.getId()) // Consistent method naming: deleteCard
+      .deleteCard(card.getId())
       .then(() => {
-        console.log("Card deleted successfully"); // Confirm successful deletion
+        console.log("Card deleted successfully");
         card.removeCard();
         deleteConfirm.close();
       })
