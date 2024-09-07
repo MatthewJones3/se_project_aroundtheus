@@ -255,6 +255,9 @@ function handleAddCardFormSubmit(data) {
     });
 }
 
+//
+//
+
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
@@ -266,3 +269,24 @@ const api = new Api({
 api.getCards().then((cards) => {
   section.renderItems(cards);
 });
+
+// document.addEventListener("DOMContentLoaded", () => {
+api
+  .getUserInfo()
+  .then((userInfo) => {
+    userInfoInstance.setUserInfo({
+      name: userInfo.name,
+      job: userInfo.about,
+    });
+    userInfoInstance.setUserAvatar(userInfo.avatar);
+    console.log("This is userInfoInstance", userInfoInstance);
+    console.log("This is userInfo.avatar", userInfo.avatar);
+  })
+  .catch((err) => console.error(`Error fetching user info: ${err}`));
+api
+  .getCards()
+  .then((cards) => {
+    section.renderItems(cards);
+  })
+  .catch((err) => console.error(`Error fetching cards: ${err}`));
+// });

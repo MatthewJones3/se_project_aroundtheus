@@ -78,6 +78,7 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
+    this._isLiked = data.isLiked || false; // Temp in case I need to change
     this._templateSelector = templateSelector;
     this._handleImageClick = handleImageClick;
     this._handleCardDelete = handleCardDelete;
@@ -116,9 +117,10 @@ export default class Card {
   }
 
   _handleLikeButton() {
+    this._isLiked = !this._isLiked; //// temp code in case need to chang
     this._element
       .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_active");
+      .classList.toggle("card__like-button_active", this._isLiked); //this._isLiked temp
   }
 
   _handleImageClick() {
@@ -135,6 +137,10 @@ export default class Card {
     this._cardImageEl.src = this._link;
     this._cardImageEl.alt = this._name;
     this._cardTitleEl.textContent = this._name;
+
+    this._element ///
+      .querySelector(".card__like-button") ///
+      .classList.toggle("card__like-button_active", this._isLiked); ///
 
     this._setEventListeners();
 
