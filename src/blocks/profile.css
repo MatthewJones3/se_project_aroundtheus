@@ -72,6 +72,11 @@
   margin-right: 24px;
 }
 
+.profile__image:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
+
 .profile__image-container {
   position: relative;
 }

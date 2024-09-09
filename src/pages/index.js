@@ -5,9 +5,17 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import { initialCards, settings } from "../utils/constants.js";
+import { settings } from "../utils/constants.js";
 import Api from "../components/api.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js";
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "3b106730-7f1e-4891-8b91-475561e3309f",
+    "Content-Type": "application/json",
+  },
+});
 
 const userInfoInstance = new UserInfo({
   nameSelector: ".profile__title",
@@ -19,15 +27,52 @@ const popupWithImage = new PopupWithImage("#preview-popup");
 popupWithImage.setEventListeners();
 
 const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
-  userInfoInstance.setUserInfo(data);
-  profileEditPopup.close();
+  if (!data || !data.name || !data.job) {
+    console.error(
+      "Invalid data provided. Ensure 'data' contains 'name' and 'job' properties."
+    );
+    return;
+  }
+
+  api
+    .updateUserInfo(data.name, data.job)
+    .then((res) => {
+      if (res && res.name && res.about) {
+        userInfoInstance.setUserInfo({
+          name: res.name,
+          job: res.about,
+        });
+        profileEditPopup.close();
+      } else {
+        console.error("Invalid response format from API:", res);
+      }
+    })
+    .catch((err) => {
+      console.error(`An error occurred while updating the user info: ${err}`);
+    });
 });
 profileEditPopup.setEventListeners();
+//
 
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   handleAddCardFormSubmit(data);
 });
 addCardPopup.setEventListeners();
+
+const editPicturePopup = new PopupWithForm("#edit-picture-modal", (data) => {
+  handleEditPictureFormSubmit(data);
+});
+editPicturePopup.setEventListeners();
+
+const deleteConfirm = new PopupWithConfirm("#delete-confirmation-modal");
+deleteConfirm.setEventListeners();
+
+document
+  .querySelector("#profile-edit-picture-button")
+  .addEventListener("click", () => {
+    //
+    editPicturePopup.open(); //
+  }); //
 
 const section = new Section(
   {
@@ -39,102 +84,67 @@ const section = new Section(
   ".cards__list"
 );
 
-const editPicturePopup = new PopupWithForm("#edit-picture-modal", (data) => {
-  handleEditPictureFormSubmit(data);
-});
-editPicturePopup.setEventListeners();
-
-/*const profileEditIcon = document.querySelector(".profile__edit-icon");
-profileEditIcon.addEventListener("click", () => {
-  editPicturePopup.open();
-});*/
-
-//
-const profileEditIcon = document.querySelector(".profile__edit-icon");
-profileEditIcon.addEventListener("click", () => {
-  editPicturePopup.open();
-});
-//
-
-/* Elements (For my own purposes) */
-const profileEditButton = document.querySelector("#profile-edit-button");
-const profileEditModal = document.querySelector("#profile-edit-modal");
-const profileEditCloseButton = profileEditModal.querySelector(".modal__close");
-const profileTitleInput = document.querySelector("#profile-title-input");
-const profileDescriptionInput = document.querySelector(
-  "#profile-description-input"
+const editFormValidator = new FormValidator(
+  settings,
+  document.querySelector("#profile-edit-modal .modal__form")
 );
-const profileEditForm = profileEditModal.querySelector(".modal__form");
-const cardListEl = document.querySelector(".cards__list");
-const addNewCardButton = document.querySelector(".profile__add-button");
-const addCardModal = document.querySelector("#add-card-modal");
-const addCardModalCloseButton = addCardModal.querySelector(".modal__close");
-const addCardFormElement = addCardModal.querySelector(".modal__form");
-const cardTitleInput = addCardFormElement.querySelector(
-  ".modal__input_type_title"
-);
-const cardUrlInput = addCardFormElement.querySelector(".modal__input_type_url");
-const previewImageModalWindow = document.querySelector("#preview-popup");
-const previewImageElement = document.querySelector(".modal__preview-image");
-const previewPopupCloseButton =
-  previewImageModalWindow.querySelector(".modal__close");
-const previewTitleModalWindow = previewImageModalWindow.querySelector(
-  ".modal__preview-title"
-);
-
-const editFormValidator = new FormValidator(settings, profileEditForm);
 editFormValidator.enableValidation();
 
-const addCardFormValidator = new FormValidator(settings, addCardFormElement);
+const addCardFormValidator = new FormValidator(
+  settings,
+  document.querySelector("#add-card-modal .modal__form")
+);
 addCardFormValidator.enableValidation();
 
-//let cardToDelete = null;
-const deleteConfirm = new PopupWithConfirm("#delete-confirmation-modal");
-deleteConfirm.setEventListeners();
-
-/*const editPictureFormElement = document.querySelector("#edit-profile-picture");
 const editPictureFormValidator = new FormValidator(
   settings,
-  editPictureFormElement
-);
-editPictureFormValidator.enableValidation();*/
-
-//
-const editPictureFormElement = document.querySelector("#edit-profile-picture");
-const editPictureFormValidator = new FormValidator(
-  settings,
-  editPictureFormElement
+  document.querySelector("#edit-profile-picture")
 );
 editPictureFormValidator.enableValidation();
-//
 
-/*function handleEditPictureFormSubmit(data) {
-  if (!data || !data.link) {
+// Set up event listeners
+document.querySelector("#profile-edit-button").addEventListener("click", () => {
+  const userInfo = userInfoInstance.getUserInfo();
+  document.querySelector("#profile-title-input").value = userInfo.name;
+  document.querySelector("#profile-description-input").value = userInfo.job;
+  profileEditPopup.open();
+});
+
+document.querySelector(".profile__add-button").addEventListener("click", () => {
+  addCardPopup.open();
+});
+
+function handleAddCardFormSubmit(data) {
+  if (!data || !data.name || !data.link) {
     console.error(
-      "Invalid data provided. Ensure 'data' contains 'link' property."
+      "Invalid data provided. Ensure 'data' contains 'name' and 'link' properties."
     );
     return;
   }
-  const avatarUrl = data.link.trim();
-  if (!avatarUrl) {
-    console.error("Avatar URL is missing or empty after trimming.");
-    return;
-  }
+
+  const cardData = {
+    name: data.name.trim(),
+    link: data.link.trim(),
+  };
+
   api
-    .updateAvatar(avatarUrl)
+    .addCard(cardData.name, cardData.link)
     .then((res) => {
-      if (res && res.avatar) {
-        userInfoInstance.setUserInfo({ avatar: res.avatar });
-        editPicturePopup.close();
+      if (res && res.name && res.link) {
+        const card = createCard(res);
+        section.addItem(card);
+        document.querySelector("#add-card-modal .modal__form").reset();
+        addCardFormValidator.resetValidation();
+        addCardPopup.close();
       } else {
         console.error("Invalid response format from API:", res);
       }
     })
     .catch((err) => {
-      console.error(`An error occurred while updating the avatar: ${err}`);
+      console.error(`An error occurred while adding the card: ${err}`);
     });
-}*/
-//
+}
+
 function handleEditPictureFormSubmit(data) {
   if (!data || !data.link) {
     console.error(
@@ -142,11 +152,13 @@ function handleEditPictureFormSubmit(data) {
     );
     return;
   }
+
   const avatarUrl = data.link.trim();
   if (!avatarUrl) {
     console.error("Avatar URL is missing or empty after trimming.");
     return;
   }
+
   api
     .updateAvatar(avatarUrl)
     .then((res) => {
@@ -161,7 +173,6 @@ function handleEditPictureFormSubmit(data) {
       console.error(`An error occurred while updating the avatar: ${err}`);
     });
 }
-//
 
 function openDeleteConfirm(card) {
   if (!card || typeof card.getId !== "function") {
@@ -169,23 +180,21 @@ function openDeleteConfirm(card) {
     return;
   }
 
-  console.log("Card ID for deletion:", card.getId());
   deleteConfirm.open();
 
   deleteConfirm.setSubmitAction(() => {
     api
       .deleteCard(card.getId())
       .then(() => {
-        console.log("Card deleted successfully");
         card.removeCard();
         deleteConfirm.close();
       })
-      .catch((err) =>
-        console.error(`An error occurred when deleting the card: ${err}`)
-      );
+      .catch((err) => {
+        console.error(`An error occurred when deleting the card: ${err}`);
+      });
   });
 }
-//
+
 function handleImageClick(name, link) {
   popupWithImage.open(name, link);
 }
@@ -195,98 +204,42 @@ function createCard(item) {
     openDeleteConfirm(cardElement);
   };
 
+  const currentUserId = userInfoInstance.getUserInfo()._id;
+
   const card = new Card(
-    item,
+    //item,
+    { ...item, currentUserId },
     "#card-template",
     handleImageClick,
     handleCardDelete,
-    openDeleteConfirm
+    openDeleteConfirm,
+    handleCardLike
   );
   return card.generateCard();
 }
 
-profileEditButton.addEventListener("click", () => {
-  const userInfo = userInfoInstance.getUserInfo();
-  profileTitleInput.value = userInfo.name;
-  profileDescriptionInput.value = userInfo.job;
-  profileEditPopup.open();
-});
-
-addNewCardButton.addEventListener("click", () => {
-  addCardPopup.open();
-});
-
-function handleAddCardFormSubmit(data) {
-  if (!data || !data.name || !data.link) {
-    console.error(
-      "Invalid data provided. Ensure 'data' contains 'name' and 'link' properties."
-    );
-    return;
-  }
-
-  const titleValue = data.name.trim();
-  const urlValue = data.link.trim();
-
-  if (!titleValue || !urlValue) {
-    console.error("Title or URL is missing or empty after trimming.");
-    return;
-  }
-
-  const cardData = {
-    name: titleValue,
-    link: urlValue,
-  };
-  console.log("Card Data:", cardData);
-  api
-    .addCard(cardData.name, cardData.link)
-    .then((res) => {
-      if (res && res.name && res.link) {
-        const card = createCard(res);
-        section.addItem(card);
-        addCardFormElement.reset();
-        addCardFormValidator.resetValidation();
-        addCardPopup.close();
-      } else {
-        console.error("Invalid response format from API:", res);
-      }
-    })
-    .catch((err) => {
-      console.error(`An error occurred while adding the card: ${err}`);
-    });
-}
-
-//
-//
-
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "3b106730-7f1e-4891-8b91-475561e3309f",
-    "Content-Type": "application/json",
-  },
-});
-
-api.getCards().then((cards) => {
-  section.renderItems(cards);
-});
-
-// document.addEventListener("DOMContentLoaded", () => {
 api
-  .getUserInfo()
-  .then((userInfo) => {
+  .getUserInfoAndCards()
+  .then(([userInfo, cards]) => {
     userInfoInstance.setUserInfo({
       name: userInfo.name,
       job: userInfo.about,
     });
     userInfoInstance.setUserAvatar(userInfo.avatar);
-    console.log("This is userInfoInstance", userInfoInstance);
-    console.log("This is userInfo.avatar", userInfo.avatar);
-  })
-  .catch((err) => console.error(`Error fetching user info: ${err}`));
-api
-  .getCards()
-  .then((cards) => {
     section.renderItems(cards);
   })
-  .catch((err) => console.error(`Error fetching cards: ${err}`));
-// });
+  .catch((err) => console.error(`Error fetching user info and cards: ${err}`));
+
+function handleCardLike(card) {
+  const method = card._isLiked ? "dislikeCard" : "likeCard";
+
+  api[method](card.getId())
+    .then((res) => {
+      console.log("API response:", res);
+      // Update the card's like status based on the response
+      card.setLikes(res.isLiked); // Use res.isLiked instead of res.likes
+    })
+    .catch((err) => {
+      console.error(`An error occurred while liking the card: ${err}`);
+    });
+}
