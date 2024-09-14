@@ -49,10 +49,10 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
     })
     .catch((err) => {
       console.error(`An error occurred while updating the user info: ${err}`);
+      // Handle error, e.g., show an error popup
     });
 });
 profileEditPopup.setEventListeners();
-//
 
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   handleAddCardFormSubmit(data);
@@ -70,9 +70,8 @@ deleteConfirm.setEventListeners();
 document
   .querySelector("#profile-edit-picture-button")
   .addEventListener("click", () => {
-    //
-    editPicturePopup.open(); //
-  }); //
+    editPicturePopup.open();
+  });
 
 const section = new Section(
   {
@@ -84,25 +83,23 @@ const section = new Section(
   ".cards__list"
 );
 
-const editFormValidator = new FormValidator(
-  settings,
-  document.querySelector("#profile-edit-modal .modal__form")
+const profileEditForm = document.querySelector(
+  "#profile-edit-modal .modal__form"
 );
-editFormValidator.enableValidation();
+const addCardForm = document.querySelector("#add-card-modal .modal__form");
+const editPictureForm = document.querySelector(
+  "#edit-picture-modal .modal__form"
+);
 
-const addCardFormValidator = new FormValidator(
-  settings,
-  document.querySelector("#add-card-modal .modal__form")
-);
+const profileEditFormValidator = new FormValidator(settings, profileEditForm);
+profileEditFormValidator.enableValidation();
+
+const addCardFormValidator = new FormValidator(settings, addCardForm);
 addCardFormValidator.enableValidation();
 
-const editPictureFormValidator = new FormValidator(
-  settings,
-  document.querySelector("#edit-profile-picture")
-);
+const editPictureFormValidator = new FormValidator(settings, editPictureForm);
 editPictureFormValidator.enableValidation();
 
-// Set up event listeners
 document.querySelector("#profile-edit-button").addEventListener("click", () => {
   const userInfo = userInfoInstance.getUserInfo();
   document.querySelector("#profile-title-input").value = userInfo.name;
@@ -142,6 +139,7 @@ function handleAddCardFormSubmit(data) {
     })
     .catch((err) => {
       console.error(`An error occurred while adding the card: ${err}`);
+      // Handle error, e.g., show an error popup
     });
 }
 
@@ -171,6 +169,7 @@ function handleEditPictureFormSubmit(data) {
     })
     .catch((err) => {
       console.error(`An error occurred while updating the avatar: ${err}`);
+      // Handle error, e.g., show an error popup
     });
 }
 
@@ -191,6 +190,7 @@ function openDeleteConfirm(card) {
       })
       .catch((err) => {
         console.error(`An error occurred when deleting the card: ${err}`);
+        // Handle error, e.g., show an error popup
       });
   });
 }
@@ -207,7 +207,6 @@ function createCard(item) {
   const currentUserId = userInfoInstance.getUserInfo()._id;
 
   const card = new Card(
-    //item,
     { ...item, currentUserId },
     "#card-template",
     handleImageClick,
@@ -228,7 +227,10 @@ api
     userInfoInstance.setUserAvatar(userInfo.avatar);
     section.renderItems(cards);
   })
-  .catch((err) => console.error(`Error fetching user info and cards: ${err}`));
+  .catch((err) => {
+    console.error(`Error fetching user info and cards: ${err}`);
+    // Handle error, e.g., show an error popup
+  });
 
 function handleCardLike(card) {
   const method = card._isLiked ? "dislikeCard" : "likeCard";
@@ -236,10 +238,10 @@ function handleCardLike(card) {
   api[method](card.getId())
     .then((res) => {
       console.log("API response:", res);
-      // Update the card's like status based on the response
-      card.setLikes(res.isLiked); // Use res.isLiked instead of res.likes
+      card.setLikes(res.isLiked);
     })
     .catch((err) => {
       console.error(`An error occurred while liking the card: ${err}`);
+      // Handle error, e.g., show an error popup
     });
 }
