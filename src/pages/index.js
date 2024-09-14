@@ -33,7 +33,7 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
     );
     return;
   }
-
+  profileEditPopup.setButtonContent();
   api
     .updateUserInfo(data.name, data.job)
     .then((res) => {
@@ -49,13 +49,12 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
     })
     .catch((err) => {
       console.error(`An error occurred while updating the user info: ${err}`);
+    })
+    .finally(() => {
+      profileEditPopup.setButtonContent("Save");
     });
 });
 profileEditPopup.setEventListeners();
-
-profileEditPopup.setButtonContent();
-
-profileEditPopup.setButtonContent("Save");
 
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   handleAddCardFormSubmit(data);
@@ -126,7 +125,7 @@ function handleAddCardFormSubmit(data) {
     name: data.name.trim(),
     link: data.link.trim(),
   };
-
+  addCardPopup.setButtonContent();
   api
     .addCard(cardData.name, cardData.link)
     .then((res) => {
@@ -142,6 +141,9 @@ function handleAddCardFormSubmit(data) {
     })
     .catch((err) => {
       console.error(`An error occurred while adding the card: ${err}`);
+    })
+    .finally(() => {
+      addCardPopup.setButtonContent("Create");
     });
 }
 
@@ -158,7 +160,7 @@ function handleEditPictureFormSubmit(data) {
     console.error("Avatar URL is missing or empty after trimming.");
     return;
   }
-
+  editPicturePopup.setButtonContent();
   api
     .updateAvatar(avatarUrl)
     .then((res) => {
@@ -171,7 +173,9 @@ function handleEditPictureFormSubmit(data) {
     })
     .catch((err) => {
       console.error(`An error occurred while updating the avatar: ${err}`);
-      // Handle error, e.g., show an error popup
+    })
+    .finally(() => {
+      editPicturePopup.setButtonContent("Save");
     });
 }
 
