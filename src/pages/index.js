@@ -6,7 +6,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import { settings } from "../utils/constants.js";
-import Api from "../components/api.js";
+import Api from "../components/Api.js";
 import PopupWithConfirm from "../components/PopupWithConfirm.js";
 
 const api = new Api({
@@ -49,10 +49,13 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
     })
     .catch((err) => {
       console.error(`An error occurred while updating the user info: ${err}`);
-      // Handle error, e.g., show an error popup
     });
 });
 profileEditPopup.setEventListeners();
+
+profileEditPopup.setButtonContent();
+
+profileEditPopup.setButtonContent("Save");
 
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   handleAddCardFormSubmit(data);
@@ -139,7 +142,6 @@ function handleAddCardFormSubmit(data) {
     })
     .catch((err) => {
       console.error(`An error occurred while adding the card: ${err}`);
-      // Handle error, e.g., show an error popup
     });
 }
 
@@ -190,7 +192,6 @@ function openDeleteConfirm(card) {
       })
       .catch((err) => {
         console.error(`An error occurred when deleting the card: ${err}`);
-        // Handle error, e.g., show an error popup
       });
   });
 }
@@ -229,7 +230,6 @@ api
   })
   .catch((err) => {
     console.error(`Error fetching user info and cards: ${err}`);
-    // Handle error, e.g., show an error popup
   });
 
 function handleCardLike(card) {
@@ -242,6 +242,5 @@ function handleCardLike(card) {
     })
     .catch((err) => {
       console.error(`An error occurred while liking the card: ${err}`);
-      // Handle error, e.g., show an error popup
     });
 }
