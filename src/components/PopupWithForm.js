@@ -27,19 +27,11 @@ export default class PopupWithForm extends Popup {
     return values;
   }
 
-  /*setButtonContent(message = "saving...") {
-    if (this._submitButton) {
-      this._submitButton.textContent = message;
-    } else {
-      console.error("Submit button not found.");
-    }
-  }*/
-
   setButtonContent(message = "saving...") {
     this._submitButton.textContent = message;
   }
 
-  setEventListeners() {
+  /*setEventListeners() {
     super.setEventListeners();
     if (this._form) {
       this._form.addEventListener("submit", (evt) => {
@@ -50,6 +42,29 @@ export default class PopupWithForm extends Popup {
           //this.setButtonContent("Save");
           //this._submitButton.textContent = "Save";
         });
+      });
+    }
+  }*/
+  //////Uncomment code above if it doesnt work.
+
+  setEventListeners() {
+    super.setEventListeners();
+    if (this._form) {
+      this._form.addEventListener("submit", (evt) => {
+        evt.preventDefault();
+        this.setButtonContent();
+
+        const formSubmitPromise = this._handleFormSubmit(
+          this._getInputValues()
+        );
+
+        if (formSubmitPromise && typeof formSubmitPromise.then === "function") {
+          formSubmitPromise.finally(() => {
+            this.setButtonContent("Save");
+          });
+        } else {
+          this.setButtonContent("Save");
+        }
       });
     }
   }

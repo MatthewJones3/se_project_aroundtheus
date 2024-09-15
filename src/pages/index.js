@@ -31,7 +31,7 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
     console.error(
       "Invalid data provided. Ensure 'data' contains 'name' and 'job' properties."
     );
-    return;
+    return Promise.resolve(); //// Promise.resolve delete if doesnt help
   }
   profileEditPopup.setButtonContent();
   api
@@ -118,7 +118,7 @@ function handleAddCardFormSubmit(data) {
     console.error(
       "Invalid data provided. Ensure 'data' contains 'name' and 'link' properties."
     );
-    return;
+    return Promise.resolve(); /// promise reseolve delete if doesnt help
   }
 
   const cardData = {
@@ -152,7 +152,7 @@ function handleEditPictureFormSubmit(data) {
     console.error(
       "Invalid data provided. Ensure 'data' contains 'link' property."
     );
-    return;
+    return Promise.resolve(); /// promise resolve delete if doesnt work
   }
 
   const avatarUrl = data.link.trim();
