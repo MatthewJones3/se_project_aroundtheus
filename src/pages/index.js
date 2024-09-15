@@ -13,7 +13,7 @@ const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
     authorization: "3b106730-7f1e-4891-8b91-475561e3309f",
-    "Content-Type": "application/json",
+    "Content-Type": "application/json", ///// I believe I have fixed this here and in Api.js
   },
 });
 
@@ -31,7 +31,7 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
     console.error(
       "Invalid data provided. Ensure 'data' contains 'name' and 'job' properties."
     );
-    return Promise.resolve(); //// Promise.resolve delete if doesnt help
+    return;
   }
   profileEditPopup.setButtonContent();
   api
@@ -118,7 +118,7 @@ function handleAddCardFormSubmit(data) {
     console.error(
       "Invalid data provided. Ensure 'data' contains 'name' and 'link' properties."
     );
-    return Promise.resolve(); /// promise reseolve delete if doesnt help
+    return;
   }
 
   const cardData = {
@@ -152,7 +152,7 @@ function handleEditPictureFormSubmit(data) {
     console.error(
       "Invalid data provided. Ensure 'data' contains 'link' property."
     );
-    return Promise.resolve(); /// promise resolve delete if doesnt work
+    return;
   }
 
   const avatarUrl = data.link.trim();

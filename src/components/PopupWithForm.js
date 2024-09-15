@@ -63,7 +63,7 @@ export default class PopupWithForm extends Popup {
             this.setButtonContent("Save");
           });
         } else {
-          this.setButtonContent("Save");
+          this.setButtonContent("Saving...");
         }
       });
     }
