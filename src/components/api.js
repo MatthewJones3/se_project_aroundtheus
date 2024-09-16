@@ -102,6 +102,7 @@ export default class Api {
   }
 
   updateUserInfo(name, about) {
+    console.log("Updating user info with:", { name, about }); ////
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
@@ -113,6 +114,7 @@ export default class Api {
   }
 
   updateAvatar(avatarUrl) {
+    console.log("Updating avatar with URL:", avatarUrl);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: {
@@ -130,6 +132,7 @@ export default class Api {
   }
 
   addCard(name, link) {
+    console.log("Adding card with name:", name, "and link:", link);
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
@@ -141,6 +144,7 @@ export default class Api {
   }
 
   deleteCard(cardId) {
+    console.log("Deleting card with ID:", cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
@@ -148,6 +152,7 @@ export default class Api {
   }
 
   likeCard(cardId) {
+    console.log("Liking card with ID:", cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
@@ -155,6 +160,7 @@ export default class Api {
   }
 
   dislikeCard(cardId) {
+    console.log("Disliking card with ID:", cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,

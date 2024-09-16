@@ -69,4 +69,3 @@ export default class PopupWithForm extends Popup {
     }
   }
 }
-//////// First set of uncommented code does the same as the second

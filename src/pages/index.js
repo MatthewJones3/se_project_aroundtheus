@@ -132,7 +132,7 @@ function handleAddCardFormSubmit(data) {
       if (res && res.name && res.link) {
         const card = createCard(res);
         section.addItem(card);
-        document.querySelector("#add-card-modal .modal__form").reset();
+        addCardForm.reset();
         addCardFormValidator.resetValidation();
         addCardPopup.close();
       } else {
