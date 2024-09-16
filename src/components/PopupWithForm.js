@@ -28,31 +28,17 @@ export default class PopupWithForm extends Popup {
   }
 
   setButtonContent(message = "saving...") {
-    this._submitButton.textContent = message;
-  }
-
-  /*setEventListeners() {
-    super.setEventListeners();
-    if (this._form) {
-      this._form.addEventListener("submit", (evt) => {
-        evt.preventDefault();
-        //this.setButtonContent();
-        //this._submitButton.textContent = "Saving...";
-        this._handleFormSubmit(this._getInputValues()).finally(() => {
-          //this.setButtonContent("Save");
-          //this._submitButton.textContent = "Save";
-        });
-      });
+    if (this._submitButton) {
+      this._submitButton.textContent = message;
     }
-  }*/
-  //////Uncomment code above if it doesnt work.
+  }
 
   setEventListeners() {
     super.setEventListeners();
     if (this._form) {
       this._form.addEventListener("submit", (evt) => {
         evt.preventDefault();
-        this.setButtonContent();
+        this.setButtonContent("Saving...");
 
         const formSubmitPromise = this._handleFormSubmit(
           this._getInputValues()

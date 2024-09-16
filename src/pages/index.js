@@ -13,7 +13,7 @@ const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
     authorization: "3b106730-7f1e-4891-8b91-475561e3309f",
-    "Content-Type": "application/json", ///// I believe I have fixed this here and in Api.js
+    "Content-Type": "application/json",
   },
 });
 
@@ -29,13 +29,15 @@ popupWithImage.setEventListeners();
 const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
   if (!data || !data.name || !data.job) {
     console.error(
-      "Invalid data provided. Ensure 'data' contains 'name' and 'job' properties."
+      "Invalid data provided for user info. Ensure 'data' contains 'name' and 'job' properties."
     );
     return;
   }
-  profileEditPopup.setButtonContent();
+
+  const { name, job } = data;
+  profileEditPopup.setButtonContent("Saving...");
   api
-    .updateUserInfo(data.name, data.job)
+    .updateUserInfo(name.trim(), job.trim())
     .then((res) => {
       if (res && res.name && res.about) {
         userInfoInstance.setUserInfo({
@@ -116,7 +118,7 @@ document.querySelector(".profile__add-button").addEventListener("click", () => {
 function handleAddCardFormSubmit(data) {
   if (!data || !data.name || !data.link) {
     console.error(
-      "Invalid data provided. Ensure 'data' contains 'name' and 'link' properties."
+      "Invalid data provided for adding card. Ensure 'data' contains 'name' and 'link' properties."
     );
     return;
   }
@@ -125,10 +127,14 @@ function handleAddCardFormSubmit(data) {
     name: data.name.trim(),
     link: data.link.trim(),
   };
-  addCardPopup.setButtonContent();
+
+  console.log("Submitting card data:", cardData);
+
+  addCardPopup.setButtonContent("Saving...");
   api
     .addCard(cardData.name, cardData.link)
     .then((res) => {
+      console.log("Card added successfully:", res);
       if (res && res.name && res.link) {
         const card = createCard(res);
         section.addItem(card);
@@ -150,7 +156,7 @@ function handleAddCardFormSubmit(data) {
 function handleEditPictureFormSubmit(data) {
   if (!data || !data.link) {
     console.error(
-      "Invalid data provided. Ensure 'data' contains 'link' property."
+      "Invalid data provided for updating avatar. Ensure 'data' contains 'link' property."
     );
     return;
   }
@@ -160,10 +166,14 @@ function handleEditPictureFormSubmit(data) {
     console.error("Avatar URL is missing or empty after trimming.");
     return;
   }
-  editPicturePopup.setButtonContent();
+
+  console.log("Submitting avatar URL:", avatarUrl);
+
+  editPicturePopup.setButtonContent("Saving...");
   api
     .updateAvatar(avatarUrl)
     .then((res) => {
+      console.log("Avatar updated successfully:", res);
       if (res && res.avatar) {
         userInfoInstance.setUserAvatar(res.avatar);
         editPicturePopup.close();
@@ -176,6 +186,14 @@ function handleEditPictureFormSubmit(data) {
     })
     .finally(() => {
       editPicturePopup.setButtonContent("Save");
+
+      const form = editPicturePopup._form;
+      if (form) {
+        form.reset();
+      }
+      if (editPictureFormValidator) {
+        editPictureFormValidator.resetValidation();
+      }
     });
 }
 
