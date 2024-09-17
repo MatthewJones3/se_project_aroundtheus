@@ -45,6 +45,8 @@ const profileEditPopup = new PopupWithForm("#profile-edit-modal", (data) => {
           job: res.about,
         });
         profileEditPopup.close();
+        profileEditForm.reset();
+        profileEditFormValidator.disableButton(); //reset.validation
       } else {
         console.error("Invalid response format from API:", res);
       }
@@ -139,7 +141,7 @@ function handleAddCardFormSubmit(data) {
         const card = createCard(res);
         section.addItem(card);
         addCardForm.reset();
-        addCardFormValidator.resetValidation();
+        addCardFormValidator.disableButton(); //resetValidation
         addCardPopup.close();
       } else {
         console.error("Invalid response format from API:", res);
@@ -177,6 +179,8 @@ function handleEditPictureFormSubmit(data) {
       if (res && res.avatar) {
         userInfoInstance.setUserAvatar(res.avatar);
         editPicturePopup.close();
+        editPictureForm.reset();
+        editPictureFormValidator.disableButton(); //resetValidation
       } else {
         console.error("Invalid response format from API:", res);
       }
@@ -187,13 +191,13 @@ function handleEditPictureFormSubmit(data) {
     .finally(() => {
       editPicturePopup.setButtonContent("Save");
 
-      const form = editPicturePopup._form;
+      /*const form = editPicturePopup.form;
       if (form) {
         form.reset();
       }
-      if (editPictureFormValidator) {
+      /*if (editPictureFormValidator) {
         editPictureFormValidator.resetValidation();
-      }
+      }*/
     });
 }
 
