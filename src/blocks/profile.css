@@ -5,6 +5,7 @@
   max-width: 880px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
 }
 
 .profile__info {
@@ -71,6 +72,44 @@
   margin-right: 24px;
 }
 
+.profile__image:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
+
+.profile__image-container {
+  position: relative;
+}
+
+.profile__image-button {
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  left: 0px;
+  width: 120px;
+  height: 120px;
+  background: transparent url(../images/editprofpic.svg) center no-repeat;
+  background-size: 26px 26px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.profile__edit-icon {
+  background: transparent url(../images/editprofpic.svg) center no-repeat;
+  height: 26px;
+  width: 26px;
+  cursor: pointer;
+  position: absolute;
+  top: 45px;
+  left: 45px;
+  border: none;
+  opacity: 0%;
+}
+
+.profile__edit-icon:hover {
+  opacity: 100%;
+}
+
 .profile__add-button:hover {
   cursor: pointer;
   opacity: 60%;
@@ -129,5 +168,18 @@
 
   .profile__image {
     margin: 0;
+  }
+
+  .profile__edit-icon {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    background: transparent url(../images/editprofpic.svg) center no-repeat;
+    background-size: contain;
+    opacity: 0;
+    pointer-events: none;
   }
 }

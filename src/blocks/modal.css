@@ -184,10 +184,48 @@
   top: 187px;
 }
 
-.modal__button:disabled {
-  opacity: 0.5;
-  background-color: #fff;
-  color: darkgray;
+.modal__error_url_avatar {
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
+  color: #ff0000;
+  width: 358px;
+  margin-left: 36px;
+  position: absolute;
+  top: 132px;
+}
+
+.modal__button_type_cancel {
+  background-color: #000;
+  color: #fff;
+}
+
+/*.modal_confirmation {
+  width: 430px;
+  height: 181px;
+  margin: auto;
+}*/
+.modal__container_avatar {
+  width: 430px;
+  height: 272px;
+  margin: auto;
+}
+
+.modal__container_delete {
+  width: 430px;
+  height: 181px;
+  margin: auto;
+}
+
+.modal__button_delete {
+  margin-top: 15px;
+  border-radius: 2px;
+}
+
+.modal__submit-button_inactive {
+  background-color: gray;
+  opacity: 0.6;
 }
 
 /*move close button at 630px */
